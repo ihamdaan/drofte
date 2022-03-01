@@ -19,7 +19,7 @@
 /client/.env.test.local
 /client/.env.production.local
 
-/server/Config/config.env
+/backend/Config/config.env
 
 npm-debug.log*
 yarn-debug.log*
