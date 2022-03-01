@@ -1,3 +1,4 @@
+// Class to throw errors
 class ErrorHandler extends Error {
     constructor(statusCode, message) {
         super(message)
