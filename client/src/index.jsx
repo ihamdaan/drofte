@@ -24,5 +24,6 @@ ReactDOM.render(
       </AlertProvider>
     </Provider>
   </React.StrictMode>,
+
   document.getElementById('root')
 );

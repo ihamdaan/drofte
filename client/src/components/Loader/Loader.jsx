@@ -1,6 +1,8 @@
 import React from 'react'
 import { PulseLoader } from "react-spinners"
 import "./Loader.css"
+
+// Custom Loader
 const Loader = () => {
     return (
         <div className='Loader'>
