@@ -1,71 +1,74 @@
 import React from "react";
 import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
+import { useNavigate } from "react-router-dom";
 
 
 //Mobile Screen
 const NavSm = () => {
-  return(
+  return (
     <>
-    <div className="text-white flex items-center justify-between">
-      <div className="w-full flex">
-        <div className="w-8 h-8">
-          <IoIosArrowBack className="w-full h-full"/>
+      <div className="text-white flex items-center justify-between">
+        <div className="w-full flex">
+          <div className="w-8 h-8">
+            <IoIosArrowBack className="w-full h-full" />
+          </div>
+          <h1 className="text-xl font-bold text-center tracking-widest w-full">
+            DRØFTE
+          </h1>
         </div>
-        <h1 className="text-xl font-bold text-center tracking-widest w-full">
-          DRØFTE
-        </h1>
       </div>
-    </div>
-  </>
+    </>
   );
 };
 
 //Tab Screen
 const NavMd = () => {
-  return(
+  return (
     <>
-    <div className="text-white flex items-center justify-between">
-      <div className="w-full flex">
-        <div className="w-8 h-8">
-          <IoIosArrowBack className="w-full h-full"/>
+      <div className="text-white flex items-center justify-between">
+        <div className="w-full flex">
+          <div className="w-8 h-8">
+            <IoIosArrowBack className="w-full h-full" />
+          </div>
+          <h1 className="text-xl font-bold tracking-widest">
+            DRØFTE
+          </h1>
         </div>
-        <h1 className="text-xl font-bold tracking-widest">
-          DRØFTE
-        </h1>
       </div>
-    </div>
-  </>
+    </>
   );
 };
 
 //Laptop Screen
 const NavLg = () => {
-  return(
-  <>
-    <div className="container mx-auto px-16 flex gap-3 justify-between">
-      <div className="flex items-center w-1/2 gap-3">
-        <div className="w-full">
-        <h1 className="text-xl font-bold text-white tracking-widest w-full">
-          DRØFTE
-        </h1>
+  const Navigate = useNavigate()
+  return (
+    <>
+      <div className="container mx-auto px-16 flex gap-3 justify-between">
+        <div className="flex items-center w-1/2 gap-3">
+          <div className="w-full">
+            <h1 className="text-xl font-bold text-white tracking-widest w-full">
+              DRØFTE
+            </h1>
+          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-gray-200 text-s flex items-center hover:text-red-600 cursor-pointer" onClick={() => Navigate(-1)}>
+            <AiOutlineClose />
+            Back
+          </span>
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <span className="text-gray-200 text-s flex items-center hover:text-red-600 cursor-pointer">
-          <AiOutlineClose />
-           Back
-        </span>
-      </div>
-    </div>
-  </>
+    </>
   );
 };
 
 
 //Main Function to export
 const SignNavbar = () => {
-  return(
+
+  return (
     <>
       <nav className="bg-bms-400 p-4 drop-shadow-lg">
         <div className="md:hidden">
