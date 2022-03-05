@@ -121,7 +121,7 @@ const SignInPageBody = () => {
   const Navigate = useNavigate()
   const alert = useAlert()
   const dispatch = useDispatch();
-  const { user, error, loading } = useSelector(state => state.user);
+  const { user, error, loading, isAuthenticated } = useSelector(state => state.user);
 
   const [state, setState] = useState({
     email: "",
@@ -145,11 +145,15 @@ const SignInPageBody = () => {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
+    if (isAuthenticated) {
+      Navigate("/")
+      return
+    }
     if (user) {
       alert.success(`Logged in successfully`);
       Navigate("/")
     }
-  }, [error, user, alert, dispatch, Navigate])
+  }, [error, user, alert, dispatch, Navigate, isAuthenticated])
 
   return (
     <>

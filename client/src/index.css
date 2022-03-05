@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ::-webkit-scrollbar {
-	display: none;
-} */
+::-webkit-scrollbar {
+	width: 12px;
+}
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(rgb(56 169 228), rgba(56, 168, 228, 0.326));
+	border-radius: 0px 0px 10px 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(rgb(28, 145, 208), rgba(56, 168, 228, 0.646));
+}
