@@ -1,6 +1,6 @@
 import React from 'react';
 import SignNavbar from '../components/Navbar/signPageNavbar.component';
-import SignInPageBody from '../components/SignInUp/signInPage.component';
+import SignInPageBody from '../components/AuthPages/signInPage.component';
 
 
 function SignIn() {

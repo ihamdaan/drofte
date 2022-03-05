@@ -2,20 +2,26 @@ import React from "react";
 import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
-
+import drofte__logo from "../../images/drofte_logo.svg";
+import drofte__logo__icon from "../../images/drofte_logo_icon.svg"
 
 //Mobile Screen
 const NavSm = () => {
+  const Navigate = useNavigate()
   return (
     <>
       <div className="text-white flex items-center justify-between">
-        <div className="w-full flex">
-          <div className="w-8 h-8">
-            <IoIosArrowBack className="w-full h-full" />
+        <div className="w-full flex items-center">
+          <div className="w-3/4">
+            <div className="w-8 h-8" onClick={() => Navigate(-1)}>
+              <IoIosArrowBack className="w-full h-full" />
+            </div>
           </div>
-          <h1 className="text-xl font-bold text-center tracking-widest w-full">
-            DRØFTE
-          </h1>
+          <div className="w-full">
+            <div className="w-12">
+              <img src={drofte__logo__icon} alt="drofte_logo" className="w-80"/>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -24,16 +30,17 @@ const NavSm = () => {
 
 //Tab Screen
 const NavMd = () => {
+  const Navigate = useNavigate()
   return (
     <>
       <div className="text-white flex items-center justify-between">
-        <div className="w-full flex">
+        <div className="w-full flex items-center" onClick={() => Navigate(-1)}>
           <div className="w-8 h-8">
             <IoIosArrowBack className="w-full h-full" />
           </div>
-          <h1 className="text-xl font-bold tracking-widest">
-            DRØFTE
-          </h1>
+          <div className="w-32">
+            <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
+          </div>
         </div>
       </div>
     </>
@@ -45,12 +52,10 @@ const NavLg = () => {
   const Navigate = useNavigate()
   return (
     <>
-      <div className="container mx-auto px-16 flex gap-3 justify-between">
-        <div className="flex items-center w-1/2 gap-3">
-          <div className="w-full">
-            <h1 className="text-xl font-bold text-white tracking-widest w-full">
-              DRØFTE
-            </h1>
+      <div className="container mx-auto px-16 flex gap-3 items-center justify-between">
+        <div className="flex items-center w-1/2">
+          <div className="w-32">
+            <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
           </div>
         </div>
         <div className="flex items-center gap-4">
