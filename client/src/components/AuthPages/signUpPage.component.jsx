@@ -12,13 +12,14 @@ const NavSm = () => {
     const navigate = useNavigate()
     return (
         <>
-            <div className="text-black mx-6">
-                <div className=" w-full mt-14">
+            <div className="text-black mx-1">
+                <div className=" w-full pt-14">
                     <img src={register_img} alt="register_img" />
                 </div>
                 <div className="mb-12 mt-14">
-                    <h1 className="text-5xl font-semibold">Sign Up!</h1>
+                    <h1 className="text-bms-400 text-5xl font-semibold">Sign Up!</h1>
                 </div>
+
                 <div className="my-6">
                     <div className="mb-4">
                         <label htmlFor="fullname" className="text-xl">Full Name</label> <br />
@@ -35,13 +36,16 @@ const NavSm = () => {
                     <div className="mb-6">
                         <label htmlFor="password" className="text-xl">Password</label> <br />
                         <input type="password" placeholder="password" className=" w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" required />
+                        <div className='my-4 text-gray-300 text-sm'>
+                            Entered password must contain at least 8 characters (12+ recommended), one uppercase letter, one lowercase letter, at least one number, at least one special character.
+                        </div>
                     </div>
                     <button className="text-gray-500 bg-gray-300 px-3 py-2 mx-2 text-lg hover:bg-red-500 hover:text-white rounded-lg focus:bg-bms-100 focus:text-gray-500">Cancel</button>
-                    <button className="text-white bg-bms-400 px-3 py-2 text-lg mx-1 hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500">Submit</button>
+                    <button className="text-white bg-bms-400 px-3 py-2 text-lg mx-1 hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500">Register</button>
 
                 </div>
                 <div className="mb-2">
-                    <span><h3 className="text-gray-400">Already have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signin")}>Sign In</span></h3></span>
+                    <span><h3 className="text-gray-400">Already have an account? <span className="cursor-pointer text-bms-400 hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signin")}>Sign In</span></h3></span>
                     <span><h3 className="text-gray-400 hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
                 </div>
 
@@ -58,7 +62,7 @@ const NavMd = () => {
             <div className="text-black mx-4 my-2 flex justify-center items-center gap-9">
                 <div className="w-full order-2">
                     <div className="mb-12 mt-8">
-                        <h1 className="text-5xl font-semibold">Sign Up!</h1>
+                        <h1 className="text-bms-400 text-5xl font-bold">Sign Up!</h1>
                     </div>
                     <div className="my-6">
                         <div className="mb-4">
@@ -76,10 +80,13 @@ const NavMd = () => {
                         <div className="mb-6">
                             <label htmlFor="password" className="text-xl">Password</label> <br />
                             <input type="password" placeholder="password" className=" w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" required />
+                            <div className='my-4 text-gray-300 text-sm'>
+                                Entered password must contain at least 8 characters (12+ recommended), one uppercase letter, one lowercase letter, at least one number, at least one special character.
+                            </div>
                         </div>
                         <div className="flex gap-4 justify-end">
                             <button className="text-gray-500 bg-gray-300 px-3 py-2 text-lg hover:bg-red-500 hover:text-white rounded-lg focus:bg-bms-100 focus:text-gray-500">Cancel</button>
-                            <button className="text-white bg-bms-400 px-3 py-2 text-lg hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500">Submit</button>
+                            <button className="text-white bg-bms-400 px-3 py-2 text-lg hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500">Register</button>
                         </div>
                     </div>
                     <div className="flex justify-end">
@@ -127,9 +134,12 @@ const NavLg = ({ state, handleChange, handleSubmit }) => {
                                 <div className="mb-6">
                                     <label htmlFor="password" className="text-xl">Password</label> <br />
                                     <input type="password" name="password" placeholder="password" className=" w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" title="create a strong password" required onChange={handleChange} value={state.password} />
+                                    <div className='my-4 text-gray-300 text-sm'>
+                                        Entered password must contain at least 8 characters (12+ recommended), one uppercase letter, one lowercase letter, at least one number, at least one special character.
+                                    </div>
                                 </div>
                                 <div className="flex gap-4 justify-end">
-                                    <button className="text-bms-400 bg-gray-50 px-3 py-2 text-lg hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit" >Submit</button>
+                                    <button className="text-bms-400 bg-gray-50 px-3 py-2 text-lg hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit" >Register</button>
                                 </div>
                             </div>
                         </form>
@@ -190,7 +200,7 @@ const SignUpPageBody = () => {
     return (
         <>
             {loading ? <Loader /> :
-                <div className="bg-gray-50 px-10">
+                <div className="bg-gray-50 px-6 md:px-10">
                     <div className="md:hidden">
                         {/*Small Screen*/}
                         <NavSm state={state} handleChange={handleChange} handleSubmit={handleSubmit} />

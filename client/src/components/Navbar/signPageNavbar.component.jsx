@@ -34,7 +34,7 @@ const NavMd = () => {
   return (
     <>
       <div className="text-white flex items-center justify-between">
-        <div className="w-full flex items-center" onClick={() => Navigate(-1)}>
+        <div className="w-full flex items-center cursor-pointer" onClick={() => Navigate(-1)}>
           <div className="w-8 h-8">
             <IoIosArrowBack className="w-full h-full" />
           </div>
@@ -59,7 +59,7 @@ const NavLg = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-gray-200 text-s flex items-center hover:text-red-600 cursor-pointer" onClick={() => Navigate(-1)}>
+          <span className="text-gray-200 text-s flex items-center hover:text-white cursor-pointer" onClick={() => Navigate(-1)}>
             <AiOutlineClose />
             Back
           </span>
