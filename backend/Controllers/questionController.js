@@ -1,6 +1,7 @@
 const Answer = require("../Database/Models/answerSchema");
 const Question = require("../Database/Models/questionSchema");
 const catchAsyncErrors = require("../Middleware/catchAsyncErrors");
+const ApiFeatures = require("../utils/ApiFeatures");
 const ErrorHandler = require("../utils/ErrorHandler");
 
 exports.createQuestion = catchAsyncErrors(async (req, res, next) => {
@@ -15,12 +16,13 @@ exports.createQuestion = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
-    const questions = await Question.find().populate("answers", "answer user createdAt");
+    const filteredQues = new ApiFeatures(Question.find().populate("answers", "answer user createdAt"), req.query).searchTitle();
+    const data = await filteredQues.list;
 
-    if (!questions) {
+    if (!data) {
         return next(new ErrorHandler(400, "No questions found"))
     }
-    return res.status(200).json({ success: true, questions });
+    return res.status(200).json({ success: true, data });
 })
 
 exports.getSingleQuestion = catchAsyncErrors(async (req, res, next) => {

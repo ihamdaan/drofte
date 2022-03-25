@@ -71,8 +71,24 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
         // const url = `${req.protocol}://${req.get("host")}/api/v1/resetPassword/${token}`;
         const subject = "DROFTE - Reset Password";
-        const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please click here to proceed: \n\n ${url}`;
-        await sendMail(email, subject, message);
+        const text = `Hello User👤,\n\n
+        It seems like you are facing problem logging in.\n
+        No need to worry, you can reset your Drofte password by clicking the link below.
+        \n\n ${url}\n\n
+        If you didn't request a password reset, feel free to delete this email and carry on your discussion with acquaintance!\n\n
+        All the best🌠,\n
+        The Drofte Team`;
+        const html = `<b>Hello User👤,</b>
+        <p>It seems like you are facing problem logging in. </p>
+        <p>No need to worry, you can reset your Drofte password by clicking the link below.</p>
+        <br>
+        <b>Click Here⬇️</b>
+        <p>${url}</p>
+        <br>
+        <p>If you didn't request a password reset, feel free to delete this email and carry on your discussion with acquaintance!<p>
+        All the best,<br>
+        The Drofte Team`
+        await sendMail(email, subject, text, html);
         return res.status(200).json({ message: "Email sent to " + email + "!" });
     }
     catch (err) {

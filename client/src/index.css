@@ -4,11 +4,11 @@
 
 ::-webkit-scrollbar {
 	width: 10px;
-    border: 6px solid rgba(144, 144, 144, 0.137);
+	border: 6px solid rgba(144, 144, 144, 0.137);
 }
 ::-webkit-scrollbar-thumb {
 	background: linear-gradient(rgba(56, 168, 228, 0.144), rgb(56 169 228));
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
 	background: linear-gradient(rgba(56, 168, 228, 0.646), rgb(28, 145, 208));

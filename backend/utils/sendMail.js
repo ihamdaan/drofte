@@ -8,7 +8,7 @@ const oAuthToClient = new google.auth.OAuth2({
 })
 oAuthToClient.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN })
 
-module.exports = async (email, subject, message) => {
+module.exports = async (email, subject, text, html) => {
     try {
         const accessToken = await oAuthToClient.getAccessToken()
         const transporter = nodemailer.createTransport({
@@ -25,9 +25,9 @@ module.exports = async (email, subject, message) => {
         await transporter.sendMail({
             from: `DROFTE <${process.env.EMAIL_ID}>`,
             to: email,
-            subject: subject,
-            text: message,
-            html: `<h3>${message}</h3>`
+            subject,
+            text,
+            html
         })
     } catch (error) {
         console.log(error)
