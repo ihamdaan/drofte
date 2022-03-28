@@ -4,27 +4,29 @@ import HomeFeedPost from './homeFeedPost.component';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader"
 import 'react-quill/dist/quill.snow.css'
-import ReactQuill, { Quill, Mixin, Toolbar } from 'react-quill';
+import ReactQuill from 'react-quill';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Button, Input, TextField, Typography } from '@mui/material';
-
+import { TextField, Typography } from '@mui/material';
+import { useAlert } from "react-alert";
 import test__img from "../../images/test_img.jpg";
 
 // import { AiFillEdit, AiOutlineFolderAdd } from 'react-icons/ai';
 // import { BsFillImageFill } from 'react-icons/bs';
 // import { MdSystemUpdateAlt, MdTipsAndUpdates } from 'react-icons/md';
-import { getAllQues } from '../../Redux/Action/questionActions';
+import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
 
 
 function HomePageFeed() {
 
   const dispatch = useDispatch()
+  const alert = useAlert()
   const { ques, loading } = useSelector(state => state.questions)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [tag, setTag] = useState("");
 
 
   const handleSetOpen = () => {
@@ -34,18 +36,31 @@ function HomePageFeed() {
     setOpen(false)
   }
   const postData = () => {
-    console.log(value);
+    if (text.length <= 0 || value.length <= 0) {
+      setOpen(false)
+      return alert.error("Please fill all the fields")
+    }
+    let tagsArray
+    if (tag) tagsArray = tag.split(' ');
+    dispatch(addQuestion({
+      title: text,
+      desc: value,
+      tags: tagsArray
+    }))
+    setText("")
+    setValue("")
+    setTag("")
     setOpen(false);
   }
 
   useEffect(() => {
     dispatch(getAllQues())
-  }, [dispatch])
+  }, [dispatch, ques?.length])
   return (
     <>
       {
         loading ? <Loader /> :
-          <div className='right__border__line py-4 px-4 w-4/6 top-0 bottom-0 overflow-y-auto w-full' >
+          <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
             <div className='sticky text-2xl font-medium'>Home Feed</div>
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line'>
@@ -58,29 +73,6 @@ function HomePageFeed() {
                   Ask a Question!
 
                 </div>
-
-                {/* <div className='flex justify-between mt-6 w-full items-center'>
-                  <div className='flex gap-5 text-bms-400'>
-                    <div className='w-6 h-6 cursor-pointer'>
-                      <AiFillEdit className='w-full h-full' />
-                    </div>
-                    <div className='w-6 h-6 cursor-pointer'>
-                      <BsFillImageFill className='w-full h-full' />
-                    </div>
-                    <div className='w-6 h-6 cursor-pointer'>
-                      <AiOutlineFolderAdd className='w-full h-full' />
-                    </div>
-                    <div className='w-6 h-6 cursor-pointer'>
-                      <MdSystemUpdateAlt className='w-full h-full' />
-                    </div>
-                    <div className='w-6 h-6 cursor-pointer'>
-                      <MdTipsAndUpdates className='w-full h-full' />
-                    </div>
-                  </div>
-                  <div>
-                    <button className='bg-bms-400 mx-4 text-lg text-white font-medium px-4 py-1 rounded-2xl'>Share</button>
-                  </div>
-                </div> */}
               </div>
             </div>
             {
@@ -91,18 +83,19 @@ function HomePageFeed() {
             <Dialog open={open} onClose={handleClose} fullWidth >
               <Typography variant='h4' className='font-bold text-center pt-5' >Add a Question</Typography>
               <DialogContent>
-                <TextField id="outlined-basic" label="Title" variant="outlined" fullWidth />
+                <TextField id="outlined-basic" label="Title*" variant="outlined" fullWidth value={text} onChange={(e) => setText(e.target.value)} />
                 <ReactQuill
                   theme='snow'
                   value={value}
                   onChange={setValue}
-                  placeholder="Ask a query..."
-                  className='my-10'
+                  placeholder="Ask a query...*"
+                  className='my-6'
                 />
+                <TextField label="Tags" variant="outlined" fullWidth value={tag} onChange={(e) => setTag(e.target.value)} helperText="Please use # at the beginning of the tag" />
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={postData}>Post</Button>
+                <button className='bg-red-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={handleClose}>Cancel</button>
+                <button className='bg-bms-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={postData}>Post</button>
               </DialogActions>
             </Dialog>
           </div>

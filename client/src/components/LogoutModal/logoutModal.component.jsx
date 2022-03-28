@@ -1,10 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../Redux/Action/userActions'
 
-export default function LogoutModel({ isOpen, setIsOpen, price }) {
+export default function LogoutModel({ isOpen, setIsOpen }) {
+  const dispatch = useDispatch()
 
   function closeModal() {
     setIsOpen(false)
+  }
+  const logout = () => {
+    dispatch(logoutUser())
+    closeModal()
+    window.location.reload(false);
   }
 
   return (
@@ -12,7 +20,7 @@ export default function LogoutModel({ isOpen, setIsOpen, price }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto z-50"
+          className="fixed inset-0 overflow-y-auto z-50"
           onClose={closeModal}
         >
           <div className="min-h-screen px-4 text-center ">
@@ -69,6 +77,7 @@ export default function LogoutModel({ isOpen, setIsOpen, price }) {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    onClick={logout}
                   >
                     Logout
                   </button>

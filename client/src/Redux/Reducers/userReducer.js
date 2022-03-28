@@ -54,6 +54,17 @@ export const userReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
+    LOGOUT_REQUEST: (state) => {
+        state.loading = true
+    },
+    LOGOUT_SUCCESS: (state, action) => {
+        state.loading = false
+        state.message = action.payload
+    },
+    LOGOUT_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     CLEAR_ERRORS: (state) => {
         state.error = null
     }

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+button {
+	transition: all 0.4s ease-in-out !important;
+}
+
 ::-webkit-scrollbar {
 	width: 6px;
 	border: 6px solid rgba(144, 144, 144, 0.137);
@@ -23,4 +27,8 @@
 }
 .ql-container {
 	min-height: 150px;
+}
+#__react-alert__ div div div {
+	text-transform: initial !important;
+	font-size: larger !important;
 }

@@ -92,7 +92,6 @@ export const forgotPassword = (email) => async (dispatch) => {
 //Reset Password
 export const resetPassword = (token, userdata) => async (dispatch) => {
     try {
-        console.log(userdata);
         dispatch({ type: "FORGOT_REQUEST" })
         const { data } = await axios.put(`/api/v1/resetPassword/${token}`, { ...userdata }, {
             headers: {
@@ -106,6 +105,24 @@ export const resetPassword = (token, userdata) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "FORGOT_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+
+//Logout User
+export const logoutUser = () => async (dispatch) => {
+    try {
+        dispatch({ type: "LOGOUT_REQUEST" })
+        const { data } = await axios.get(`/api/v1/logout`)
+        dispatch({
+            type: "LOGOUT_SUCCESS",
+            payload: data.message
+        })
+    } catch (error) {
+        dispatch({
+            type: "LOGOUT_FAIL",
             payload: error.response.data.error
         })
     }

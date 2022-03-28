@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ReactHtmlParser from 'react-html-parser';
 import test__img from "../../images/test_img_2.jpg";
 
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
@@ -27,7 +27,7 @@ function HomeFeedPost({ question }) {
                         </div>
 
                         <div className='font-medium text-gray-500 text-sm'>
-                            @{question?.user?.email}
+                            #{question?.user?.email}
                         </div>
 
                         <div className='font-medium text-gray-400 text-xs'>
@@ -39,7 +39,7 @@ function HomeFeedPost({ question }) {
                         <h1 className="font-bold">{question.title}</h1>
                     </div>
                     <div className='py-2'>
-                        <p >{question.desc}</p>
+                        {ReactHtmlParser(question.desc)}
                     </div>
                     <div className='py-2 mb-10'>
                         <div className='mt-2 flex flex-wrap gap-2'>
@@ -53,14 +53,14 @@ function HomeFeedPost({ question }) {
                             question.answers?.map((answer, index) => {
 
                                 if (index === 0) {
-                                    return <div className=' bottom__border__line'>
+                                    return <div className=' bottom__border__line' key={answer?._id}>
                                         <h1 className='font-bold'>Answers</h1>
                                         <div className=" flex my-3">
                                             <img src={test__img} alt="profile_pic" className=" rounded-full w-14 h-14" />
                                             <div className='font-medium text-gray-700 text-lg px-5'>
                                                 {answer?.user?.name}
                                                 <br />
-                                                @{answer?.user?.email}
+                                                #{answer?.user?.email}
                                             </div>
 
                                             <div className='font-medium text-gray-400 text-xs'>
@@ -70,7 +70,7 @@ function HomeFeedPost({ question }) {
 
                                         <div className='flex items-center gap-2 pt-2'>
                                         </div>
-                                        <div>Answer: {answer?.answer}</div>
+                                        <div>Answer: {ReactHtmlParser(answer?.answer)}</div>
                                         <div className="hover:to-blue-500 py-6 justify-end flex">View more...</div>
                                     </div>
 
