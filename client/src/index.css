@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 6px;
 	border: 6px solid rgba(144, 144, 144, 0.137);
 }
 ::-webkit-scrollbar-thumb {
@@ -12,4 +12,15 @@
 }
 ::-webkit-scrollbar-thumb:hover {
 	background: linear-gradient(rgba(56, 168, 228, 0.646), rgb(28, 145, 208));
+}
+
+.right__border__line {
+	border-right: 1px solid rgba(128, 128, 128, 0.192);
+}
+
+.bottom__border__line {
+	border-bottom: 1px solid rgba(128, 128, 128, 0.192);
+}
+.ql-container {
+	min-height: 150px;
 }

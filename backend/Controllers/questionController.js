@@ -16,7 +16,12 @@ exports.createQuestion = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
-    const filteredQues = new ApiFeatures(Question.find().populate("answers", "answer user createdAt"), req.query).searchTitle();
+    const filteredQues = new ApiFeatures(Question.find().populate({
+        path: "answers",
+        populate: {
+            path: "user",
+        }
+    }).populate("user", "name email"), req.query).searchTitle();
     const data = await filteredQues.list;
 
     if (!data) {
