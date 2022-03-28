@@ -23,7 +23,7 @@ export const getAllQues = () => async (dispatch) => {
 }
 
 
-//Get all questions
+//Add a questions
 export const addQuestion = (userData) => async (dispatch) => {
     try {
         dispatch({ type: "ADD_QUES_REQUEST" })
@@ -32,7 +32,6 @@ export const addQuestion = (userData) => async (dispatch) => {
                 "Content-Type": "application/json",
             }
         })
-        console.log(data);
         dispatch({
             type: "ADD_QUES_SUCCESS",
             payload: data.data
@@ -40,6 +39,24 @@ export const addQuestion = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "ADD_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+
+//Delete a question
+export const deleteQuestion = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: "DELETE_QUES_REQUEST" })
+        const { data } = await axios.delete(`/api/v1/question/${id}`)
+        dispatch({
+            type: "DELETE_QUES_SUCCESS",
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: "DELETE_QUES_FAIL",
             payload: error.response.data.error
         })
     }

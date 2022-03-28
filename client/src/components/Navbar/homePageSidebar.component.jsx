@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import '../../../src/index.css';
-
 import LogoutModal from "../LogoutModal/logoutModal.component";
 
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
-import { BiHomeCircle, BiUserCircle } from 'react-icons/bi';
+import { BiHomeCircle, BiPlusCircle, BiUserCircle } from 'react-icons/bi';
 import { AiOutlineSolution } from 'react-icons/ai';
 import { RiQuestionnaireLine, RiSettingsLine } from 'react-icons/ri';
 import { CgNotifications, CgProfile } from 'react-icons/cg';
 
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import drofte__logo from "../../images/drofte_logo_blue.svg";
 import drofte__logo__icon from "../../images/drofte-icon_blue.svg";
@@ -125,6 +124,7 @@ const NavLg = ({ user }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const Navigate = useNavigate()
+  const location = useLocation()
 
   const logoutModal = () => {
     setIsOpen(true);
@@ -142,55 +142,50 @@ const NavLg = ({ user }) => {
                 <img src={drofte__logo} alt="drofte_logo" className="w-80" />
               </div>
 
-              <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+              <Link to={"/home"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/home" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <BiHomeCircle className="w-full h-full" />
                 </div>
                 <div className="text-xl">Home</div>
-              </button>
+              </Link>
 
-              <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+              <Link to={"/queries"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/queries" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <RiQuestionnaireLine className="w-full h-full" />
                 </div>
                 <div className="text-xl">Your Queries</div>
-              </button>
+              </Link>
 
-              <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm
-                  focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+              <Link to={"/remarks"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/remarks" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <AiOutlineSolution className="w-full h-full" />
                 </div>
                 <div className="text-xl">Your Remarks</div>
-              </button>
+              </Link>
 
-              {/* <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm
-                  focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
-                <div className="w-8 h-8">
-                  <CgNotifications className="w-full h-full" />
-                </div>
-                <div className="text-xl">Notifications</div>
-              </button> */}
-
-              <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm
-                  focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+              <Link to={"/profile"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <CgProfile className="w-full h-full" />
                 </div>
                 <div className="text-xl">Profile</div>
-              </button>
+              </Link>
 
-              <button className="my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm
-                  focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+              <Link to={"/question/new"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
+                <div className="w-8 h-8">
+                  <BiPlusCircle className="w-full h-full" />
+                </div>
+                <div className="text-xl">Ask Question</div>
+              </Link>
+              <Link to={"/settings"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/settings" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <RiSettingsLine className="w-full h-full" />
                 </div>
                 <div className="text-xl">Settings</div>
-              </button>
+              </Link>
 
-              <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
+              {/* <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
                 Discuss
-              </button>
+              </button> */}
             </div>
 
             <div className="flex gap-3 p-3 items-center">

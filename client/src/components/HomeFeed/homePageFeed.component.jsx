@@ -22,7 +22,7 @@ function HomePageFeed() {
 
   const dispatch = useDispatch()
   const alert = useAlert()
-  const { ques, loading } = useSelector(state => state.questions)
+  const { ques, loading, error, isDeleted } = useSelector(state => state.questions)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -51,11 +51,21 @@ function HomePageFeed() {
     setValue("")
     setTag("")
     setOpen(false);
+    dispatch(getAllQues())
+    alert.success("Question added successfully")
   }
 
   useEffect(() => {
+    if (error) {
+      alert.error(error)
+      dispatch({ type: "CLEAR_ERRORS" })
+    }
+    if (isDeleted) {
+      alert.success("Question deleted successfully")
+      dispatch({ type: "DELETE_QUES_RESET" })
+    }
     dispatch(getAllQues())
-  }, [dispatch, ques?.length])
+  }, [dispatch, error, isDeleted, alert, ques?.length])
   return (
     <>
       {

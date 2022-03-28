@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+
 import { useSelector } from 'react-redux'
-import { Outlet, Navigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import SignIn from './Pages/SignIn.page'
 
 const ProtectedRoute = () => {
     const { loading, isAuthenticated } = useSelector(state => state.user)
@@ -11,7 +12,7 @@ const ProtectedRoute = () => {
             {
                 loading === false && (isAuthenticated === true ?
                     <Outlet /> :
-                    <Navigate to="/signin" />)
+                    <SignIn />)
             }
         </>
     )

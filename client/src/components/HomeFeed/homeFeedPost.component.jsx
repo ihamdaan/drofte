@@ -1,27 +1,36 @@
-import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import test__img from "../../images/test_img_2.jpg";
-
-import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
-import { BiComment } from 'react-icons/bi';
-import { MdSaveAlt } from 'react-icons/md';
+import Moment from 'react-moment';
+import { MdDelete, MdUpdate } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteQuestion } from '../../Redux/Action/questionActions';
 
 
 function HomeFeedPost({ question }) {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { user } = useSelector(state => state.user)
+
     const handleClick = (id) => {
         navigate(`/question/${id}`)
     }
+    const updateQues = (id) => {
+        navigate(`/update-question/${id}`)
+    }
+    const deleteQues = (id) => {
+        dispatch(deleteQuestion(id))
+    }
+
     return (
         <>
-            <div className='my-2 px-2 py-4 flex gap-8 bottom__border__line cursor-pointer hover:bg-gray-50' onClick={() => handleClick(question?._id)}>
+            <div className='my-2 px-2 py-4 flex gap-8  cursor-pointer hover:bg-gray-50' onClick={() => handleClick(question?._id)}>
                 <div className="w-14 h-14">
                     <img src={test__img} alt="profile_pic" className="w-full h-full rounded-full" />
                 </div>
 
                 <div className='w-full'>
-                    <div className='flex items-center gap-2 pt-2'>
+                    <div className='flex items-center gap-2 pt-2 relative'>
                         <div className='font-medium text-gray-700 text-lg'>
                             {question?.user?.name}
                         </div>
@@ -30,8 +39,8 @@ function HomeFeedPost({ question }) {
                             #{question?.user?.email}
                         </div>
 
-                        <div className='font-medium text-gray-400 text-xs'>
-                            · 31m
+                        <div className='font-medium text-gray-400 text-xs absolute right-0'>
+                            <Moment fromNow>{question?.createdAt}</Moment>
                         </div>
                     </div>
 
@@ -64,7 +73,7 @@ function HomeFeedPost({ question }) {
                                             </div>
 
                                             <div className='font-medium text-gray-400 text-xs'>
-                                                · 31m
+                                                <Moment fromNow>{answer?.createdAt}</Moment>
                                             </div>
                                         </div>
 
@@ -79,29 +88,24 @@ function HomeFeedPost({ question }) {
                             })
                         }
                     </div>
-
-                    {/* <div className='w-full my-2'>
-                        <img src="https://pbs.twimg.com/media/FOTkUIHagAESYZN?format=png&name=small" alt="post_img" className='w-full h-full' />
-                    </div> */}
-
-                    <div className='mt-8 w-full px-8' >
-                        <div className='flex justify-between gap-5 text-bms-400'>
-                            <div className='w-5 h-5 cursor-pointer'>
-                                <AiOutlineLike className='w-full h-full' />
-                            </div>
-                            <div className='w-5 h-5 cursor-pointer'>
-                                <AiOutlineDislike className='w-full h-full' />
-                            </div>
-                            <div className='w-5 h-5 cursor-pointer'>
-                                <BiComment className='w-full h-full' />
-                            </div>
-                            <div className='w-5 h-5 cursor-pointer'>
-                                <MdSaveAlt className='w-full h-full' />
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+            {
+                question.user._id.toString() === user?._id.toString() ?
+                    <div className='w-full px-3 bottom__border__line pb-3' >
+                        <div className='flex justify-end text-bms-400'>
+                            <div className='w-10 h-10 mx-2 cursor-pointer '>
+                                <MdUpdate className='w-full h-full text-green-400 hover:text-green-600' onClick={() => updateQues(question._id)} />
+                            </div>
+
+                            <div className='w-10 h-10 mx-2 cursor-pointer '>
+                                <MdDelete className='w-full h-full text-red-400 text-lg hover:text-red-600' onClick={() => deleteQues(question._id)} />
+                            </div>
+                        </div>
+                    </div> :
+                    <div className='bottom__border__line'></div>
+
+            }
         </>
     )
 }

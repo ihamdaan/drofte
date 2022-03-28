@@ -9,6 +9,7 @@ import HomePage from './Pages/Home.page';
 import { loadUser } from "./Redux/Action/userActions"
 import { useDispatch } from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
+import HomeSidebar from './components/Navbar/homePageSidebar.component';
 
 function App() {
   const dispatch = useDispatch()
@@ -29,6 +30,11 @@ function App() {
         <Route exact path="/question/:id" element={<Loader />} />
         {/* Logged in user routes */}
         <Route element={<ProtectedRoute />}>
+          <Route path="/settings" element={<HomeSidebar />} />
+          <Route path="/profile" element={<HomeSidebar />} />
+          <Route path="/queries" element={<HomeSidebar />} />
+          <Route path="/remarks" element={<HomeSidebar />} />
+          <Route path="/question/new" element={<HomeSidebar />} />
         </Route>
       </Routes>
     </Router>

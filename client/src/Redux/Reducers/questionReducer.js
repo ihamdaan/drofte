@@ -30,10 +30,16 @@ export const questionReducer = createReducer(initialState, {
     },
     DELETE_QUES_SUCCESS: (state, action) => {
         state.loading = false
-        state.message = action.payload
+        state.isDeleted = action.payload
+    },
+    DELETE_QUES_RESET: (state) => {
+        state.isDeleted = false
     },
     DELETE_QUES_FAIL: (state, action) => {
         state.loading = false
         state.error = action.payload
+    },
+    CLEAR_ERRORS: (state) => {
+        state.error = null
     }
 })
