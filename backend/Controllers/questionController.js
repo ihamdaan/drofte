@@ -21,7 +21,7 @@ exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
         populate: {
             path: "user",
         }
-    }).populate("user", "name email"), req.query).searchTitle();
+    }).populate("user", "name email"), req.query).search();
     const data = await filteredQues.list;
 
     if (!data) {

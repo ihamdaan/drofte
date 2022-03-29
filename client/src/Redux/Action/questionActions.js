@@ -1,11 +1,15 @@
 import axios from "axios"
 
-//Get all questions
 
-export const getAllQues = () => async (dispatch) => {
+//Get all questions
+export const getAllQues = (keyword) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_QUES_REQUEST" })
-        const { data } = await axios.get("/api/v1/question/all", {
+        let link = "/api/v1/question/all"
+        if (keyword) {
+            link = `/api/v1/question/all?keyword=${keyword}`
+        }
+        const { data } = await axios.get(link, {
             headers: {
                 "Content-Type": "application/json",
             }

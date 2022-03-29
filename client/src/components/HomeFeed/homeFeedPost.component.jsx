@@ -53,7 +53,7 @@ function HomeFeedPost({ question }) {
                     <div className='py-2 mb-10'>
                         <div className='mt-2 flex flex-wrap gap-2'>
                             {question.tags.map((tag, index) => (
-                                <button key={index} className='bg-bms-100 p-1 rounded-lg hover:bg-gray-200 text-gray-600 px-2'>#{tag}</button>
+                                <button key={index} className='bg-bms-100 p-1 rounded-lg hover:bg-gray-200 text-gray-600 px-2'>{tag}</button>
                             ))}
                         </div>
                     </div>

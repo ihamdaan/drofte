@@ -5,15 +5,33 @@ class ApiFeatures {
         this.query = query;
     }
 
-    searchTitle() {
-        const myquery = this.query.keyword &&
-        {
-            title: {
-                $regex: this.query.keyword,
-                $options: "i" //case insensitive
+    search() {
+        if (this.query.keyword) {
+            let search = this.query.keyword.split(' ')
+            for (let i = 0; i < search.length; i++) {
+                this.list = this.list.find({
+                    $or: [
+                        {
+                            title:
+                            {
+                                $regex: search[i], $options: 'i'
+                            }
+                        },
+                        {
+                            desc:
+                            {
+                                $regex: search[i], $options: 'i'
+                            }
+                        },
+                        {
+                            tags: {
+                                $in: new RegExp(search[i], 'i'),
+                            }
+                        }
+                    ]
+                })
             }
         }
-        this.list = this.list.find({ ...myquery })
         return this
     }
 

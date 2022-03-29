@@ -40,6 +40,10 @@ function HomePageFeed() {
       setOpen(false)
       return alert.error("Please fill all the fields")
     }
+    if (!tag.startsWith("#")) {
+      setOpen(false)
+      return alert.error("Tags must start with a hashtag(#)")
+    }
     let tagsArray
     if (tag) tagsArray = tag.split(' ');
     dispatch(addQuestion({
@@ -65,7 +69,7 @@ function HomePageFeed() {
       dispatch({ type: "DELETE_QUES_RESET" })
     }
     dispatch(getAllQues())
-  }, [dispatch, error, isDeleted, alert, ques?.length])
+  }, [dispatch, error, isDeleted, alert])
   return (
     <>
       {

@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSearch } from "react-icons/bi";
+import { useDispatch } from 'react-redux';
+import { getAllQues } from '../../Redux/Action/questionActions';
 
 function HomePageTrending() {
+  const [value, setValue] = useState("")
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllQues(value))
+  }, [dispatch, value])
   return (
     <>
       <div className='py-4 px-4 top-0 bottom-0 overflow-y-auto w-1/2'>
@@ -14,6 +21,8 @@ function HomePageTrending() {
             type="search"
             className="w-full bg-transparent border-none focus:outline-none"
             placeholder="Search for your Queries here"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
         </div>
 
