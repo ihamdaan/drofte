@@ -22,7 +22,7 @@ function HomePageFeed() {
 
   const dispatch = useDispatch()
   const alert = useAlert()
-  const { ques, loading, error, isDeleted } = useSelector(state => state.questions)
+  const { ques, loading, error, isDeleted, isUpdated } = useSelector(state => state.questions)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -68,8 +68,12 @@ function HomePageFeed() {
       alert.success("Question deleted successfully")
       dispatch({ type: "DELETE_QUES_RESET" })
     }
+    if (isUpdated) {
+      alert.success("Question updated successfully")
+      dispatch({ type: "UPDATE_QUES_RESET" })
+    }
     dispatch(getAllQues())
-  }, [dispatch, error, isDeleted, alert])
+  }, [dispatch, error, isDeleted, isUpdated, alert])
   return (
     <>
       {

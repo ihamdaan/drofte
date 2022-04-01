@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
-	transition: all 0.4s ease-in-out !important;
+button,
+svg {
+	transition: all 0.4s !important;
 }
 
 ::-webkit-scrollbar {

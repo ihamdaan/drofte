@@ -64,4 +64,26 @@ export const deleteQuestion = (id) => async (dispatch) => {
             payload: error.response.data.error
         })
     }
+}
+
+
+//Update a question
+export const updateQuestion = (id, updatedData) => async (dispatch) => {
+    try {
+        dispatch({ type: "UPDATE_QUES_REQUEST" })
+        const { data } = await axios.put(`/api/v1/question/${id}`, { ...updatedData }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        dispatch({
+            type: "UPDATE_QUES_SUCCESS",
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: "UPDATE_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
 } 

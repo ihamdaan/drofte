@@ -39,6 +39,20 @@ export const questionReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
+    UPDATE_QUES_REQUEST: (state) => {
+        state.loading = true
+    },
+    UPDATE_QUES_SUCCESS: (state, action) => {
+        state.loading = false
+        state.isUpdated = action.payload
+    },
+    UPDATE_QUES_RESET: (state) => {
+        state.isUpdated = false
+    },
+    UPDATE_QUES_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     CLEAR_ERRORS: (state) => {
         state.error = null
     }
