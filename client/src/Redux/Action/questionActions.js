@@ -86,4 +86,26 @@ export const updateQuestion = (id, updatedData) => async (dispatch) => {
             payload: error.response.data.error
         })
     }
+}
+
+
+//Get logged in user's questions
+export const getMyQuestions = (keyword) => async (dispatch) => {
+    try {
+        dispatch({ type: "MY_QUES_REQUEST" })
+        let link = "/api/v1/question/my"
+        if (keyword) {
+            link = `/api/v1/question/my?keyword=${keyword}`
+        }
+        const { data } = await axios.get(link)
+        dispatch({
+            type: "MY_QUES_SUCCESS",
+            payload: data.questions
+        })
+    } catch (error) {
+        dispatch({
+            type: "MY_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
 } 

@@ -80,3 +80,20 @@ exports.deleteQuestion = catchAsyncErrors(async (req, res, next) => {
     return res.status(200).json({ success: true, message: "Question deleted successfully" });
 
 })
+
+exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
+
+    const filteredQues = new ApiFeatures(Question.find({ user: req.user._id }).populate({
+        path: "answers",
+        populate: {
+            path: "user",
+        }
+    }).populate("user", "name email"), req.query).search();
+    const questions = await filteredQues.list;
+    if (!questions) {
+        return next(new ErrorHandler(404, "No questions found"));
+    }
+
+    return res.status(200).json({ success: true, questions });
+
+})
