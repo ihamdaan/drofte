@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Loader from './components/Loader/Loader';
+
 import SignIn from './Pages/SignIn.page';
 import SignUp from './Pages/SignUp.page';
 import ForgetPass from './Pages/ForgetPass.page';
 import NewPass from './Pages/NewPass.page';
 import HomePage from './Pages/Home.page';
+import ProfilePage from './Pages/Profile.page';
+import EditProfilePage from './Pages/EditProfile.page';
+import ChangePass from './Pages/ChangePass.page';
+
 import { loadUser } from "./Redux/Action/userActions"
 import { useDispatch } from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
@@ -28,10 +33,14 @@ function App() {
         <Route path="/password/forget" element={<ForgetPass />} />
         <Route exact path="/api/v1/resetPassword/:token" element={<NewPass />} />
         <Route exact path="/question/:id" element={<Loader />} />
+        
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<EditProfilePage />} />
+        <Route path="/password/change" element={<ChangePass />} />
+        
         {/* Logged in user routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/settings" element={<HomeSidebar />} />
-          <Route path="/profile" element={<HomeSidebar />} />
           <Route path="/queries" element={<HomeSidebar />} />
           <Route path="/remarks" element={<HomeSidebar />} />
           <Route path="/question/new" element={<HomeSidebar />} />

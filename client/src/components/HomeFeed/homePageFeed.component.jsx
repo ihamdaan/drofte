@@ -78,13 +78,13 @@ function HomePageFeed() {
             <div className='sticky text-2xl font-medium'>Home Feed</div>
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line'>
-              <div className="w-14 h-14">
+              <div className="object-cover w-14 h-14">
                 <img src={test__img} alt="profile_pic" className="w-full h-full rounded-full" />
               </div>
 
               <div className='w-full'>
                 <div className='text-gray-400 cursor-pointer text-xl pt-4' onClick={handleSetOpen}>
-                  Ask a Question!
+                  Ask your Questions here!
 
                 </div>
               </div>
