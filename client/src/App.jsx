@@ -15,6 +15,7 @@ import { loadUser } from "./Redux/Action/userActions"
 import { useDispatch } from 'react-redux';
 import ProtectedRoute from './ProtectedRoute';
 import HomeSidebar from './components/Navbar/homePageSidebar.component';
+import YourQueries from './Pages/YourQueries.page';
 
 function App() {
   const dispatch = useDispatch()
@@ -41,7 +42,8 @@ function App() {
         {/* Logged in user routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/settings" element={<HomeSidebar />} />
-          <Route path="/queries" element={<HomeSidebar />} />
+          <Route path="/profile" element={<HomeSidebar />} />
+          <Route path="/queries" element={<YourQueries />} />
           <Route path="/remarks" element={<HomeSidebar />} />
           <Route path="/question/new" element={<HomeSidebar />} />
         </Route>

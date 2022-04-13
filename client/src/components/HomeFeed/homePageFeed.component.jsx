@@ -12,17 +12,15 @@ import { TextField, Typography } from '@mui/material';
 import { useAlert } from "react-alert";
 import test__img from "../../images/test_img.jpg";
 
-// import { AiFillEdit, AiOutlineFolderAdd } from 'react-icons/ai';
-// import { BsFillImageFill } from 'react-icons/bs';
-// import { MdSystemUpdateAlt, MdTipsAndUpdates } from 'react-icons/md';
 import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
+import { MdCancel } from 'react-icons/md';
 
 
 function HomePageFeed() {
 
   const dispatch = useDispatch()
   const alert = useAlert()
-  const { ques, loading, error, isDeleted } = useSelector(state => state.questions)
+  const { ques, loading, error, isDeleted, isUpdated } = useSelector(state => state.questions)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -68,8 +66,12 @@ function HomePageFeed() {
       alert.success("Question deleted successfully")
       dispatch({ type: "DELETE_QUES_RESET" })
     }
+    if (isUpdated) {
+      alert.success("Question updated successfully")
+      dispatch({ type: "UPDATE_QUES_RESET" })
+    }
     dispatch(getAllQues())
-  }, [dispatch, error, isDeleted, alert])
+  }, [dispatch, error, isDeleted, isUpdated, alert])
   return (
     <>
       {
@@ -90,9 +92,14 @@ function HomePageFeed() {
               </div>
             </div>
             {
-              ques?.map(que => (
-                <HomeFeedPost key={que._id} question={que} />
-              ))
+              ques?.length ?
+                ques.map(que => (
+                  <HomeFeedPost key={que._id} question={que} />
+                )) :
+                <div className='flex justify-center items-center h-96  flex-col'>
+                  <MdCancel className='text-red-400 text-8xl' />
+                  <div className='text-4xl font-bold opacity-60 text-center'>No Questions Found</div>
+                </div>
             }
             <Dialog open={open} onClose={handleClose} fullWidth >
               <Typography variant='h4' className='font-bold text-center pt-5' >Add a Question</Typography>
