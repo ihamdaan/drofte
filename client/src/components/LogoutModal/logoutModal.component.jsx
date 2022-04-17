@@ -10,9 +10,9 @@ export default function LogoutModel({ isOpen, setIsOpen }) {
     setIsOpen(false)
   }
   const logout = () => {
+    window.location.reload()
     dispatch(logoutUser())
     closeModal()
-    window.location.reload(false);
   }
 
   return (

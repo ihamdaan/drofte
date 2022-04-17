@@ -5,7 +5,6 @@ import SignIn from './Pages/SignIn.page'
 
 const ProtectedRoute = () => {
     const { loading, isAuthenticated } = useSelector(state => state.user)
-    // const x = useSelector(state => state)
 
     return (
         <>

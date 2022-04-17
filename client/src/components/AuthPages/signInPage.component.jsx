@@ -3,7 +3,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import login__img from "../../images/login.svg";
-import { loginUser } from "../../Redux/Action/userActions";
+import { loadUser, loginUser } from "../../Redux/Action/userActions";
 import Loader from "../Loader/Loader";
 
 //Mobile Screen
@@ -151,6 +151,7 @@ const SignInPageBody = () => {
     }
     if (user) {
       alert.success(`Logged in successfully`);
+      loadUser()
       Navigate("/")
     }
   }, [error, user, alert, dispatch, Navigate, isAuthenticated])

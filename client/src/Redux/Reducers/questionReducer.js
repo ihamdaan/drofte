@@ -8,7 +8,10 @@ export const questionReducer = createReducer(initialState, {
     },
     ALL_QUES_SUCCESS: (state, action) => {
         state.loading = false
-        state.ques = action.payload
+        state.ques = action.payload.data
+        state.documents = action.payload.documents
+        state.ResultsPerPage = action.payload.resultsPerPage
+        state.filteredQuesCount = action.payload.filteredQuesCount
     },
     ALL_QUES_FAIL: (state, action) => {
         state.loading = false
@@ -30,7 +33,11 @@ export const questionReducer = createReducer(initialState, {
     },
     ADD_QUES_SUCCESS: (state, action) => {
         state.loading = false
-        state.newques = action.payload
+        state.isAdded = action.payload
+    },
+    ADD_QUES_RESET: (state) => {
+        state.loading = false
+        state.isAdded = false
     },
     ADD_QUES_FAIL: (state, action) => {
         state.loading = false

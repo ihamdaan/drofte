@@ -34,6 +34,12 @@ class ApiFeatures {
         }
         return this
     }
+    pagination(ResultsPerPage) {
+        let CurrentPage = Number(this.query.page) || 1
+        const skip = ResultsPerPage * (CurrentPage - 1)
+        this.list = this.list.limit(ResultsPerPage).skip(skip)
+        return this;
+    }
 
 }
 

@@ -4,10 +4,11 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const saveToCookie = require("../utils/saveToCookie");
 const sendMail = require("../utils/sendMail");
 const crypto = require("crypto")
+const cloudinary = require("cloudinary")
 
 exports.RegisterUser = catchAsyncErrors(async (req, res, next) => {
 
-    const { name, email, UID, branch, password, interests } = req.body;
+    const { name, email, UID, password } = req.body;
     if (email.slice(0, 9) != UID) {
         return next(new ErrorHandler(400, "Invalid Email or UID"));
     }
@@ -18,9 +19,11 @@ exports.RegisterUser = catchAsyncErrors(async (req, res, next) => {
         name,
         email,
         UID,
-        branch,
         password,
-        interests,
+        profilePhoto: {
+            public_id: "empty",
+            url: "https://res.cloudinary.com/rajat0512/image/upload/v1642447946/E-commerce/avatar_gehm7u.jpg"
+        }
     })
     saveToCookie(res, 201, user);
 
@@ -127,3 +130,72 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user._id).select("-password");
     res.status(200).json({ success: true, user });
 })
+
+// Update Profile
+exports.updateProfile = catchAsyncErrors(async (req, res) => {
+    const { name, bio, links, branch } = req.body;
+    const Data = { name, bio, links, branch }
+
+    const newData = addImage(req, Data)
+
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, { ...newData }, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+    return res.status(200).json({ success: true, message: "Profile updated successfully!", user: updatedUser })
+})
+
+//Update user password
+exports.updatePassword = catchAsyncErrors(async (req, res) => {
+    const { oldPass, newPass, confirmPass } = req.body
+    if (!oldPass || !newPass || !confirmPass) {
+        return res.status(400).json({ error: "Please fill all the fields" })
+    }
+
+    const user = await User.findById(req.user._id).select("+password")
+    const isPasswordMatched = await user.comparePassword(oldPass)
+    if (!isPasswordMatched) {
+        return res.status(400).json({ error: "Old password is incorrect" })
+    }
+    if (newPass.length < 6) {
+        return res.status(400).json({ error: "Password must be atleast 6 characters" })
+    }
+    if (newPass !== confirmPass) {
+        return res.status(400).json({ error: "Password doesn't match" })
+    }
+    user.password = newPass
+    await user.save({ validateBeforeSave: false })
+    saveToCookie(res, 200, user)
+})
+
+const addImage = async (req, newData) => {
+
+    const user = await User.findById(req.user._id)
+
+    if (req.body.profilePhoto) {
+        const image_id = user.profilePhoto.public_id
+        await cloudinary.v2.uploader.destroy(image_id)
+        const myCloud = await cloudinary.v2.uploader.upload(photo, {
+            folder: "Drofte",
+            crop: "scale"
+        })
+        newData.profilePhoto = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
+    }
+    if (req.body.coverPhoto) {
+        const image_id = user.coverPhoto.public_id
+        await cloudinary.v2.uploader.destroy(image_id)
+        const myCloud = await cloudinary.v2.uploader.upload(photo, {
+            folder: "Drofte",
+            crop: "scale"
+        })
+        newData.coverPhoto = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
+    }
+    return newData
+}

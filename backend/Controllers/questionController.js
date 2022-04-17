@@ -16,18 +16,24 @@ exports.createQuestion = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
+    const numberOfDocuments = await Question.countDocuments();
+    const ResultsPerPage = 3
     const filteredQues = new ApiFeatures(Question.find().populate({
         path: "answers",
         populate: {
             path: "user",
+            select: "name email profilePhoto"
         }
-    }).populate("user", "name email"), req.query).search();
-    const data = await filteredQues.list;
+    }).populate("user", "name email profilePhoto"), req.query).search();
+    let data = await filteredQues.list;
 
+    const filteredQuesCount = data.length
+    filteredQues.pagination(ResultsPerPage);
+    data = await filteredQues.list.clone();
     if (!data) {
         return next(new ErrorHandler(400, "No questions found"))
     }
-    return res.status(200).json({ success: true, data });
+    return res.status(200).json({ success: true, data, numberOfDocuments, ResultsPerPage, filteredQuesCount });
 })
 
 exports.getSingleQuestion = catchAsyncErrors(async (req, res, next) => {
@@ -83,17 +89,22 @@ exports.deleteQuestion = catchAsyncErrors(async (req, res, next) => {
 
 exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
 
+    const ResultsPerPage = 2
     const filteredQues = new ApiFeatures(Question.find({ user: req.user._id }).populate({
         path: "answers",
         populate: {
             path: "user",
         }
-    }).populate("user", "name email"), req.query).search();
-    const questions = await filteredQues.list;
+    }).populate("user", "name email"), req.query).search().pagination();
+    let questions = await filteredQues.list;
+
+    const filteredQuesCount = questions.length
+    filteredQues.pagination(ResultsPerPage);
+    questions = await filteredQues.list.clone();
+
     if (!questions) {
         return next(new ErrorHandler(404, "No questions found"));
     }
 
-    return res.status(200).json({ success: true, questions });
-
+    return res.status(200).json({ success: true, questions, ResultsPerPage, filteredQuesCount });
 })

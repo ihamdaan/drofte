@@ -2,11 +2,11 @@ import axios from "axios"
 
 
 //Get all questions
-export const getAllQues = (keyword) => async (dispatch) => {
+export const getAllQues = (keyword = "", page = 1) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_QUES_REQUEST" })
-        let link = "/api/v1/question/all"
-        if (keyword) {
+        let link = `/api/v1/question/all?page=${page}`
+        if (keyword !== "") {
             link = `/api/v1/question/all?keyword=${keyword}`
         }
         const { data } = await axios.get(link, {
@@ -16,7 +16,12 @@ export const getAllQues = (keyword) => async (dispatch) => {
         })
         dispatch({
             type: "ALL_QUES_SUCCESS",
-            payload: data.data
+            payload: {
+                data: data.data,
+                documents: data.numberOfDocuments,
+                resultsPerPage: data.ResultsPerPage,
+                filteredQuesCount: data.filteredQuesCount,
+            }
         })
     } catch (error) {
         dispatch({
@@ -38,12 +43,13 @@ export const addQuestion = (userData) => async (dispatch) => {
         })
         dispatch({
             type: "ADD_QUES_SUCCESS",
-            payload: data.data
+            payload: data.success
         })
     } catch (error) {
         dispatch({
             type: "ADD_QUES_FAIL",
-            payload: error.response.data.error
+            payload: error.response.data.message
+
         })
     }
 }
@@ -90,14 +96,14 @@ export const updateQuestion = (id, updatedData) => async (dispatch) => {
 
 
 //Get logged in user's questions
-export const getMyQuestions = (keyword) => async (dispatch) => {
+export const getMyQuestions = (keyword, page = 1) => async (dispatch) => {
     try {
         dispatch({ type: "MY_QUES_REQUEST" })
-        let link = "/api/v1/question/my"
+        let link = `/api/v1/question/my?page=${page}`
         if (keyword) {
-            link = `/api/v1/question/my?keyword=${keyword}`
+            link = `/api/v1/question/my?keyword=${keyword}&page=${page}`
         }
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link);
         dispatch({
             type: "MY_QUES_SUCCESS",
             payload: data.questions

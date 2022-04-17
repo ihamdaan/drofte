@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import register_img from "../../images/register.svg"
-import { registerUser } from "../../Redux/Action/userActions";
+import { loadUser, registerUser } from "../../Redux/Action/userActions";
 import { useAlert } from 'react-alert'
 import Loader from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
@@ -191,6 +191,7 @@ const SignUpPageBody = () => {
         }
         if (user) {
             alert.success(`Logged in successfully`);
+            loadUser()
             Navigate("/")
         }
     }, [error, user, alert, dispatch, Navigate])
