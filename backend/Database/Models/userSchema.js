@@ -30,8 +30,21 @@ const userSchema = new mongoose.Schema({
         minlength: [6, "Password must be atleast 6 characters"],
         select: false
     },
-    interests: {
+    profilePhoto: {
+        public_id: String,
+        url: String
+    },
+    coverPhoto: {
+        public_id: String,
+        url: String
+    },
+    bio: {
         type: String,
+    },
+    links: {
+        LinkedIn: String,
+        Twitter: String,
+        Instagram: String
     },
     date: {
         type: Date,

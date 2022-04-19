@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 
 function NewPass() {
   return (
-    <div className="NewPass">
+    <div className="NewPass bg-gray-50 min-h-screen">
       <Helmet>
         <title>Password Reset | DROFTE</title>
       </Helmet>

@@ -18,7 +18,7 @@ const NavSm = () => {
             </div>
           </div>
           <div className="w-full">
-            <div className="w-12">
+            <div className="w-12 cursor-pointer" onClick={() => Navigate("/")}>
               <img src={drofte__logo__icon} alt="drofte_logo" className="w-80"/>
             </div>
           </div>
@@ -38,7 +38,7 @@ const NavMd = () => {
           <div className="w-8 h-8">
             <IoIosArrowBack className="w-full h-full" />
           </div>
-          <div className="w-32">
+          <div className="w-32 cursor-pointer" onClick={() => Navigate("/")}>
             <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
           </div>
         </div>
@@ -54,7 +54,7 @@ const NavLg = () => {
     <>
       <div className="container mx-auto px-16 flex gap-3 items-center justify-between">
         <div className="flex items-center w-1/2">
-          <div className="w-32">
+          <div className="w-32 cursor-pointer" onClick={() => Navigate("/")}>
             <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
           </div>
         </div>

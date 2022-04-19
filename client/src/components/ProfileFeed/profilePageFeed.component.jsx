@@ -1,88 +1,99 @@
-import React, { useEffect, useState } from 'react';
 import profile__test__img from "../../images/test_img.jpg";
-import profile__bg__test__img from "../../images/bg_test_img.jpg";
+import profile__bg__test__img from "../../images/drofte_logo_blue.svg";
 
 import { useNavigate } from "react-router-dom";
 
 import { FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
-import { GrLocation } from 'react-icons/gr';
+import { useSelector } from "react-redux";
+import Loader from "../Loader/Loader";
 
 
 function ProfilePageFeed() {
-  
+
+  const { loading, user } = useSelector(state => state.user)
+
   const navigate = useNavigate()
 
   return (
     <>
-      
-      <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-        <div className='sticky text-2xl font-medium'>Profile</div>
+      {
+        loading ? <Loader />
+          :
+          <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
+            <div className='sticky text-2xl font-medium'>My Profile</div>
 
-        <div className='profile_header relative h-80 mt-2'>
-          <div className='object-cover h-60 w-full'>
-            <img 
-              src={profile__bg__test__img} 
-              alt="background image" 
-              className='w-full h-full border-b'
-            />
-          </div>
-          <div className='absolute bottom-0 left-10 object-cover w-40 h-40 '>
-            <img 
-              src={profile__test__img} 
-              alt="profile image" 
-              className='w-full h-full rounded-full border' 
-            />
-          </div>
+            <div className='profile_header relative h-80 mt-2'>
+              <div className='object-cover h-60 w-full'>
+                <img
+                  src={profile__bg__test__img}
+                  alt="background "
+                  className='w-full h-full border-b'
+                />
+              </div>
+              <div className='absolute bottom-0 left-10 object-cover w-40 h-40 '>
+                <img
+                  src={user?.profilePhoto?.url || profile__test__img}
+                  alt="profile "
+                  className='w-full h-full rounded-full border'
+                />
+              </div>
 
-          <div
-            onClick={() => navigate("/profile/edit")} 
-            className='py-1 rounded-2xl px-3 absolute bottom-10 right-0 ring-1 ring-bms-400 font-medium hover:bg-bms-50 cursor-pointer'
-          >
-              Edit Profile
-          </div>
-        </div>
-
-        <div className='mt-8'>
-          <div className='font-bold text-xl'>Kanye Beast</div>
-          <div className='text-sm text-gray-400'>20CGT1022@cuchd.in</div>
-
-          <div className='mt-4 text-md text-gray-800'>
-            A DROFTE bio is a small public summary about yourself or your business displayed 
-            under your Twitter profile picture. In the bio, you can include limited characters of 
-            text, hashtags, emojis, and handles of profiles you're affiliated with.
-          </div>
-
-          <div className='social_handles flex justify-between mt-4 text-gray-500 w-3/4 items-center'>
-
-            <div className='flex gap-1 cursor-pointer items-center'>
-              <FaLinkedin className='w-5 h-5'/>
-              <div className='hover:underline'>kanYesBee</div>
+              <div
+                onClick={() => navigate("/profile/edit")}
+                className='py-1 rounded-2xl px-3 absolute bottom-10 right-0 ring-1 ring-bms-400 font-medium hover:bg-bms-50 cursor-pointer'
+              >
+                Edit Profile
+              </div>
             </div>
 
-            <div className='flex gap-1 cursor-pointer items-center'>
-              <FaTwitter className='w-5 h-5'/>
-              <div className='hover:underline'>kanyee09</div>
-            </div>
+            <div className='mt-8'>
+              <div className='font-bold text-xl'>{user.name}</div>
+              <div className='text-sm text-gray-400'>{user.email}</div>
 
-            <div className='flex gap-1 cursor-pointer items-center'>
-              <FaInstagram className='w-5 h-5'/>
-              <div className='hover:underline'>beast_kanye</div>
-            </div>
+              <div className='mt-4 text-md text-gray-800'>
+                {
+                  user.bio ? user.bio : <div className="text-gray-400">
+                    A DROFTE bio is a small public summary about yourself  under your profile picture. In the bio, you can characters oftext, hashtags, emojis, and handles of profiles you're affiliated with.
 
-            <div className='flex gap-1 items-center'>
-              <GrLocation className='w-5 h-5'/>
-              <div className='text-gray-800'>Chandigarh</div>
-            </div>
+                    <br />
+                    <br />
+                    <span className="text-gray-500">
+                      <span className="font-bold">Example:</span>
+                      <br />
+                      <span className="text-gray-500">
+                        I am a software engineer, and I love to build things.
+                      </span>
+                    </span>
+                    <br />
+                    <br />
+                    <div className="text-right">CLICK ON EDIT PROFILE TO EDIT YOUR BIO</div>
+                  </div>
+                }
+              </div>
 
+              <div className='social_handles flex justify-between mt-4 text-gray-500 w-3/4 items-center'>
+                {user.links?.LinkedIn &&
+                  <div className='flex gap-1 cursor-pointer items-center'>
+                    <FaLinkedin className='w-5 h-5' />
+                    <a href={user.links.LinkedIn} target="_blank" rel="noreferrer noopener" className='hover:underline'>LinkedIn</a>
+                  </div>}
+
+                {user.links?.Twitter &&
+                  <div className='flex gap-1 cursor-pointer items-center'>
+                    <FaTwitter className='w-5 h-5' />
+                    <a href={user.links.Twitter} className='hover:underline'>Twitter</a>
+                  </div>}
+
+                {user.links?.Instagram &&
+                  <div className='flex gap-1 cursor-pointer items-center'>
+                    <FaInstagram className='w-5 h-5' />
+                    <a href={user.links.Instagram} className='hover:underline'>Instagram</a>
+                  </div>}
+
+              </div>
+            </div>
           </div>
-
-          <div className='mt-4 flex gap-2 items-center'>
-            <button className='bg-bms-400 py-1 px-3 text-white rounded-xl font-semibold hover:bg-bms-300'>connect</button>
-            <div className='text-3xl'>·</div> 
-            <div className='cursor-pointer hover:underline'>52 connections</div>
-          </div>
-        </div>
-      </div>
+      }
     </>
   )
 }

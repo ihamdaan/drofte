@@ -8,7 +8,7 @@ import { useAlert } from "react-alert";
 import { getMyQuestions } from '../../Redux/Action/questionActions';
 import { MdCancel } from 'react-icons/md';
 
-const UserQueries = () => {
+const UserRemarks = () => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -37,7 +37,7 @@ const UserQueries = () => {
     return (
         <>
             <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-                <div className='bottom__border__line sticky text-2xl font-medium pb-3'>Your Queries</div>
+                <div className='bottom__border__line sticky text-2xl font-medium pb-3'>Your Remarks</div>
                 {loading ? <Loader /> :
                     myQues?.length ?
                         myQues.map(que => (
@@ -54,4 +54,4 @@ const UserQueries = () => {
     )
 }
 
-export default UserQueries
+export default UserRemarks

@@ -3,7 +3,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import login__img from "../../images/login.svg";
-import { loginUser } from "../../Redux/Action/userActions";
+import { loadUser, loginUser } from "../../Redux/Action/userActions";
 import Loader from "../Loader/Loader";
 
 //Mobile Screen
@@ -79,7 +79,7 @@ const NavLg = ({ handleSubmit, state, handleChange }) => {
   const navigate = useNavigate()
   return (
     <>
-      <div className="bg-bms-400 mx-16 my-6 rounded-lg drop-shadow-2xl">
+      <div className="bg-bms-400 mx-20 w-full h-3/4 my-6 rounded-lg drop-shadow-2xl">
         <div className="text-white mx-12 my-2 flex justify-center items-center">
           <div className="w-full">
             <form onSubmit={handleSubmit} method="post">
@@ -151,6 +151,7 @@ const SignInPageBody = () => {
     }
     if (user) {
       alert.success(`Logged in successfully`);
+      loadUser()
       Navigate("/")
     }
   }, [error, user, alert, dispatch, Navigate, isAuthenticated])
@@ -159,7 +160,7 @@ const SignInPageBody = () => {
     <>
       {
         loading ? <Loader /> :
-          <div className="bg-gray-50 p-4">
+          <div className="p-4">
             <div className="md:hidden">
               {/*Small Screen*/}
               <NavSm handleSubmit={handleSubmit} state={state} handleChange={handleChange} />

@@ -3,19 +3,22 @@ import axios from "axios"
 //Register user
 export const registerUser = (userdata) => async (dispatch) => {
     try {
-        dispatch({ type: "LOGIN_REQUEST" })
+        dispatch({ type: "REGISTER_REQUEST" })
         const { data } = await axios.post("/api/v1/register", { ...userdata }, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
         dispatch({
-            type: "LOGIN_SUCCESS",
-            payload: data.user
+            type: "REGISTER_SUCCESS",
+            payload: {
+                user: data.user,
+                isAuthenticated: data.success
+            }
         })
     } catch (error) {
         dispatch({
-            type: "LOGIN_FAIL",
+            type: "REGISTER_FAIL",
             payload: error.response.data.error
         })
     }
@@ -25,11 +28,7 @@ export const registerUser = (userdata) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: "LOAD_USER_REQUEST" })
-        const { data } = await axios.get("/api/v1/profile", {
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
+        const { data } = await axios.get("/api/v1/profile")
         dispatch({
             type: "LOAD_USER_SUCCESS",
             payload: {
@@ -48,19 +47,22 @@ export const loadUser = () => async (dispatch) => {
 //Login user
 export const loginUser = (userdata) => async (dispatch) => {
     try {
-        dispatch({ type: "REGISTER_REQUEST" })
+        dispatch({ type: "LOGIN_REQUEST" })
         const { data } = await axios.post("/api/v1/login", { ...userdata }, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
         dispatch({
-            type: "REGISTER_SUCCESS",
-            payload: data.user
+            type: "LOGIN_SUCCESS",
+            payload: {
+                user: data.user,
+                isAuthenticated: data.success
+            }
         })
     } catch (error) {
         dispatch({
-            type: "REGISTER_FAIL",
+            type: "LOGIN_FAIL",
             payload: error.response.data.error
         })
     }
@@ -123,6 +125,52 @@ export const logoutUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "LOGOUT_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+
+//Logout User
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: "UPDATE_PROFILE_REQUEST" })
+        console.log(userData);
+        const { data } = await axios.put(`/api/v1/profile/update`, userData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        dispatch({
+            type: "UPDATE_PROFILE_SUCCESS",
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: "UPDATE_PROFILE_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+
+//Logout User
+export const changePass = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: "UPDATE_PASSWORD_REQUEST" })
+        console.log(userData);
+        const { data } = await axios.put(`/api/v1/password/update`, userData, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        dispatch({
+            type: "UPDATE_PASSWORD_SUCCESS",
+            payload: data.success
+        })
+    } catch (error) {
+        dispatch({
+            type: "UPDATE_PASSWORD_FAIL",
             payload: error.response.data.error
         })
     }

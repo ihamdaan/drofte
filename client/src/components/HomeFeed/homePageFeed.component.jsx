@@ -8,10 +8,9 @@ import ReactQuill from 'react-quill';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { TextField, Typography } from '@mui/material';
+import { Pagination, TextField, Typography } from '@mui/material';
 import { useAlert } from "react-alert";
 import test__img from "../../images/test_img.jpg";
-
 import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
 import { MdCancel } from 'react-icons/md';
 
@@ -20,10 +19,12 @@ function HomePageFeed() {
 
   const dispatch = useDispatch()
   const alert = useAlert()
-  const { ques, loading, error, isDeleted, isUpdated } = useSelector(state => state.questions)
+  const { ques, loading, error, isDeleted, isUpdated, isAdded, ResultsPerPage, filteredQuesCount } = useSelector(state => state.questions)
+  const { user } = useSelector(state => state.user)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  const [page, setPage] = useState(1);
   const [tag, setTag] = useState("");
 
 
@@ -32,6 +33,9 @@ function HomePageFeed() {
   }
   const handleClose = () => {
     setOpen(false)
+  }
+  const setCurrentPageNo = (e, newpage) => {
+    setPage(newpage)
   }
   const postData = () => {
     if (text.length <= 0 || value.length <= 0) {
@@ -53,14 +57,18 @@ function HomePageFeed() {
     setValue("")
     setTag("")
     setOpen(false);
-    dispatch(getAllQues())
-    alert.success("Question added successfully")
   }
+
+  const numberOfPages = Math.ceil(filteredQuesCount / ResultsPerPage)
 
   useEffect(() => {
     if (error) {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
+    }
+    if (isAdded) {
+      alert.success("Question added successfully")
+      dispatch({ type: "ADD_QUES_RESET" })
     }
     if (isDeleted) {
       alert.success("Question deleted successfully")
@@ -70,8 +78,8 @@ function HomePageFeed() {
       alert.success("Question updated successfully")
       dispatch({ type: "UPDATE_QUES_RESET" })
     }
-    dispatch(getAllQues())
-  }, [dispatch, error, isDeleted, isUpdated, alert])
+    dispatch(getAllQues(undefined, page))
+  }, [dispatch, error, isDeleted, isUpdated, alert, page, isAdded])
   return (
     <>
       {
@@ -80,8 +88,8 @@ function HomePageFeed() {
             <div className='sticky text-2xl font-medium'>Home Feed</div>
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line'>
-              <div className="object-cover w-14 h-14">
-                <img src={test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+              <div className="w-14">
+                <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
               </div>
 
               <div className='w-full'>
@@ -91,16 +99,24 @@ function HomePageFeed() {
                 </div>
               </div>
             </div>
+            {ques?.length ?
+              ques.map(que => (
+                <HomeFeedPost key={que._id} question={que} />
+              )) :
+              <div className='flex justify-center items-center h-96  flex-col'>
+                <MdCancel className='text-red-400 text-8xl' />
+                <div className='text-4xl font-bold opacity-60 text-center'>No Questions Found</div>
+              </div>}
             {
-              ques?.length ?
-                ques.map(que => (
-                  <HomeFeedPost key={que._id} question={que} />
-                )) :
-                <div className='flex justify-center items-center h-96  flex-col'>
-                  <MdCancel className='text-red-400 text-8xl' />
-                  <div className='text-4xl font-bold opacity-60 text-center'>No Questions Found</div>
-                </div>
+              ques?.length > 0 &&
+              <div className='flex justify-center mt-4'>
+                <Pagination count={numberOfPages || 1} onChange={setCurrentPageNo} page={page} size="large" color="primary" />
+              </div>
             }
+
+
+
+
             <Dialog open={open} onClose={handleClose} fullWidth >
               <Typography variant='h4' className='font-bold text-center pt-5' >Add a Question</Typography>
               <DialogContent>

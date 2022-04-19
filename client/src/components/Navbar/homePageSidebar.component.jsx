@@ -5,10 +5,12 @@ import SignInModal from '../SignInModal/signinModal.component';
 
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
-import { BiHomeCircle, BiPlusCircle, BiUserCircle } from 'react-icons/bi';
+import { BiHomeCircle, BiPlusCircle } from 'react-icons/bi';
 import { AiOutlineSolution } from 'react-icons/ai';
 import { RiQuestionnaireLine, RiSettingsLine } from 'react-icons/ri';
 import { CgNotifications, CgProfile } from 'react-icons/cg';
+import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
+import PermIdentityTwoToneIcon from '@mui/icons-material/PermIdentityTwoTone';
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -47,6 +49,8 @@ const NavMd = () => {
   const logoutModal = () => {
     setIsOpen(true);
   };
+  
+  const Navigate = useNavigate()
 
   return (
     <>
@@ -56,7 +60,7 @@ const NavMd = () => {
         <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
           <div className="flex flex-col justify-between h-full items-center">
             <div className="py-1">
-              <div className="mb-5 w-10">
+              <div className="mb-5 w-10 cursor-pointer" onClick={() => Navigate("/")}>
                 <img src={drofte__logo__icon} alt="drofte_logo" className="w-full" />
               </div>
 
@@ -83,7 +87,7 @@ const NavMd = () => {
                 <button title='Notifications' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
                     focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
                   <div className="w-8 h-8">
-                    <CgNotifications className="w-full h-full" />
+                    <BiPlusCircle className="w-full h-full" />
                   </div>
                 </button>
 
@@ -125,7 +129,6 @@ const NavLg = ({ user }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSignOpen, setIsSignOpen] = useState(false);
-
   const Navigate = useNavigate()
   const location = useLocation()
 
@@ -141,16 +144,18 @@ const NavLg = ({ user }) => {
     <>
       <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
       <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />
-
+      {user ? "" :
+        <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
+      }
       <div className="">
         <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
           <div className="flex flex-col justify-between h-full">
             <div className="px-5 py-1">
-              <div className="mb-5">
-                <img src={drofte__logo} alt="drofte_logo" className="w-80" />
+              <div className="mb-5 cursor-pointer" onClick={() => Navigate("/")}>
+                <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
               </div>
 
-              <Link to={"/home"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/home" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+              <Link to={"/"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <BiHomeCircle className="w-full h-full" />
                 </div>
@@ -171,18 +176,18 @@ const NavLg = ({ user }) => {
                 <div className="text-xl">Your Remarks</div>
               </Link>
 
-              <Link to={"/profile"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
-                <div className="w-8 h-8">
-                  <CgProfile className="w-full h-full" />
-                </div>
-                <div className="text-xl">Profile</div>
-              </Link>
-
               <Link to={"/question/new"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <BiPlusCircle className="w-full h-full" />
                 </div>
                 <div className="text-xl">Ask Question</div>
+              </Link>
+
+              <Link to={"/profile"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+                <div className="w-8 h-8">
+                  <CgProfile className="w-full h-full" />
+                </div>
+                <div className="text-xl">Profile</div>
               </Link>
 
               <Link to={"/settings"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/settings" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
@@ -201,8 +206,8 @@ const NavLg = ({ user }) => {
               {
                 user ?
                   <>
-                    <div className="object-cover w-11 h-11">
-                      <img src={test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+                    <div className="w-11">
+                      <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
                     </div>
 
                     <div className="text-xl leading-5">
@@ -216,17 +221,17 @@ const NavLg = ({ user }) => {
                   </>
                   :
                   <div className='flex flex-col w-full mx-7'>
-                    <button onClick={signinModal} className="mb-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-transparent w-full bg-blue-400 text-white font-bold">
+                    <button className="mb-2 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-600 hover:bg-gray-300 w-full bg-bms-400 text-white font-bold" onClick={() => setIsSignOpen(true)}>
                       <div className="w-8 h-8">
-                        <BiUserCircle className="w-full h-full" />
+                        <PermIdentityTwoToneIcon className="w-full h-full" />
                       </div>
-                      <div className="text-xl">Login</div>
+                      <div className="text-lg">Login</div>
                     </button>
-                    <button className=" p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-transparent w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signup")}>
+                    <button className="py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-600 hover:bg-gray-300 w-full bg-bms-400 text-white font-bold" onClick={() => Navigate("/signup")}>
                       <div className="w-8 h-8">
-                        <BiUserCircle className="w-full h-full" />
+                        <PersonAddAltTwoToneIcon className="w-full h-full" />
                       </div>
-                      <div className="text-xl">Register</div>
+                      <div className="text-lg">Register</div>
                     </button>
                   </div>
               }

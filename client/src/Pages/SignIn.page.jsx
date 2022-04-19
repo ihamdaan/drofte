@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 
 function SignIn() {
   return (
-    <div className="SignIn">
+    <div className="SignIn bg-gray-50 min-h-screen">
       <Helmet>
         <title>SignIn | DROFTE</title>
       </Helmet>

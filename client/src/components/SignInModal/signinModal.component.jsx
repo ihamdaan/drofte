@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import login__img from "../../images/login_modal.svg";
 import { loginUser } from "../../Redux/Action/userActions";
 
-export default function SignInModal({isSignOpen, setIsSignOpen}) {
+export default function SignInModal({ isSignOpen, setIsSignOpen }) {
 
   function closeModal() {
     setIsSignOpen(false)
@@ -18,7 +18,7 @@ export default function SignInModal({isSignOpen, setIsSignOpen}) {
   const Navigate = useNavigate()
   const alert = useAlert()
   const dispatch = useDispatch();
-  const { user, error, loading, isAuthenticated } = useSelector(state => state.user);
+  const { user, error, isAuthenticated } = useSelector(state => state.user);
 
   const [state, setState] = useState({
     email: "",
@@ -42,12 +42,13 @@ export default function SignInModal({isSignOpen, setIsSignOpen}) {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
-    if (isAuthenticated) {
+    if (isAuthenticated === true) {
       Navigate("/")
       return
     }
     if (user) {
       alert.success(`Logged in successfully`);
+      closeModal()
       Navigate("/")
     }
   }, [error, user, alert, dispatch, Navigate, isAuthenticated])
@@ -91,54 +92,54 @@ export default function SignInModal({isSignOpen, setIsSignOpen}) {
             >
               <div className="bg-bms-400 drop-shadow-2xl inline-block w-3/4 mx-10 w-full overflow-hidden text-left align-middle transition-all transform rounded-2xl">
                 <div className="">
-                    <div className="text-white mx-12 my-2 flex justify-center items-center gap-3">
-                        <div className="w-full">
-                            <form onSubmit={handleSubmit} method="post">
-                                <div className="mb-12 mt-8">
-                                    <h1 className="text-5xl font-semibold">Sign In!</h1>
-                                </div>
-                                <div className="my-8">
-                                    <div className="mb-6">
-                                    <label htmlFor="username" className="text-xl">Email</label> <br />
-                                    <input type="email" placeholder="eg: 00ABC000@cuchd.in" className=" w-3/4 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" title="enter your official email" required name="email" value={state.email} onChange={handleChange} />
-                                    </div>
-                                    <div className="mb-8">
-                                    <label htmlFor="password" className="text-xl">Password</label> <br />
-                                    <input type="password" placeholder="Enter your Password" className=" w-3/4 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" title="enter password" required name="password" value={state.password} onChange={handleChange} />
-                                    </div>
-
-                                    <div className='flex gap-3'>
-
-                                        <button
-                                            type="button"
-                                            className="bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-red-600 border border-transparent rounded-md hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 mb-1"
-                                            onClick={closeModal}
-                                            >
-                                            Cancel
-                                        </button>
-                                        <button 
-                                            className="bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-bms-500 border border-transparent rounded-md hover:bg-bms-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-bms-500 mb-1" 
-                                            type="submit"
-                                            >
-                                                Sign In
-                                        </button>
-
-                                    </div>
-                                     
-                                </div>
-
-                                <div className="my-6">
-                                    <span><h3 className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
-                                    <span><h3 className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></h3></span>
-                                </div>
-                            </form>
+                  <div className="text-white mx-12 my-2 flex justify-center items-center gap-3">
+                    <div className="w-full">
+                      <form onSubmit={handleSubmit} method="post">
+                        <div className="mb-12 mt-8">
+                          <h1 className="text-5xl font-semibold">Sign In!</h1>
                         </div>
-                        <div>
-                            <div className=" w-full mt-16">
-                            <img src={login__img} alt="login__img" />
-                            </div>
+                        <div className="my-8">
+                          <div className="mb-6">
+                            <label htmlFor="username" className="text-xl">Email</label> <br />
+                            <input type="email" placeholder="eg: 00ABC000@cuchd.in" className=" w-3/4 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" title="enter your official email" required name="email" value={state.email} onChange={handleChange} />
+                          </div>
+                          <div className="mb-8">
+                            <label htmlFor="password" className="text-xl">Password</label> <br />
+                            <input type="password" placeholder="Enter your Password" className=" w-3/4 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" title="enter password" required name="password" value={state.password} onChange={handleChange} />
+                          </div>
+
+                          <div className='flex gap-3'>
+
+                            <button
+                              type="button"
+                              className="bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-red-600 border border-transparent rounded-md hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 mb-1"
+                              onClick={closeModal}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-bms-500 border border-transparent rounded-md hover:bg-bms-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-bms-500 mb-1"
+                              type="submit"
+                            >
+                              Sign In
+                            </button>
+
+                          </div>
+
                         </div>
+
+                        <div className="my-6">
+                          <span><h3 className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
+                          <span><h3 className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></h3></span>
+                        </div>
+                      </form>
                     </div>
+                    <div>
+                      <div className=" w-full mt-16">
+                        <img src={login__img} alt="login__img" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Transition.Child>

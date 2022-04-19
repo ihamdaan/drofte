@@ -72,8 +72,8 @@ function HomeFeedPost({ question }) {
     return (
         <>
             <div className='my-2 px-2 pt-4 flex gap-8  cursor-pointer hover:bg-gray-100 transition-all duration-200 rounded' onClick={() => handleClick(question?._id)}>
-                <div className="w-14 h-14">
-                    <img src={test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+                <div className="w-16">
+                    <img src={question?.user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full rounded-full" />
                 </div>
 
                 <div className='w-full'>
@@ -112,7 +112,7 @@ function HomeFeedPost({ question }) {
                                     return <div className=' bottom__border__line' key={answer?._id}>
                                         <h1 className='font-bold'>Answers</h1>
                                         <div className=" flex my-3">
-                                            <img src={test__img} alt="profile_pic" className=" rounded-full w-14 h-14" />
+                                            <img src={answer?.user?.profilePhoto || test__img} alt="profile_pic" className=" rounded-full w-14" />
                                             <div className='font-medium text-gray-700 text-lg px-5'>
                                                 {answer?.user?.name}
                                                 <br />
