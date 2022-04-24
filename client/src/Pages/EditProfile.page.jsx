@@ -10,7 +10,7 @@ function EditProfilePage() {
       <Metadata title={"Edit Profile | DROFTE"} />
       <HomeSidebar />
       <EditProfilePageFeed />
-      {/* <HomePageTrending /> */}
+      <HomePageTrending />
     </div>
   );
 }

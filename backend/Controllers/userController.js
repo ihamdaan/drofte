@@ -136,7 +136,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res) => {
     const { name, bio, links, branch } = req.body;
     const Data = { name, bio, links, branch }
 
-    const newData = addImage(req, Data)
+    const newData = await addImage(req, Data)
 
     const updatedUser = await User.findByIdAndUpdate(req.user.id, { ...newData }, {
         new: true,
@@ -173,10 +173,10 @@ const addImage = async (req, newData) => {
 
     const user = await User.findById(req.user._id)
 
-    if (req.body.profilePhoto) {
+    if (req.body.profilePhoto !== "") {
         const image_id = user.profilePhoto.public_id
         await cloudinary.v2.uploader.destroy(image_id)
-        const myCloud = await cloudinary.v2.uploader.upload(photo, {
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.profilePhoto, {
             folder: "Drofte",
             crop: "scale"
         })
@@ -185,10 +185,10 @@ const addImage = async (req, newData) => {
             url: myCloud.secure_url
         }
     }
-    if (req.body.coverPhoto) {
+    if (req.body.coverPhoto !== "") {
         const image_id = user.coverPhoto.public_id
         await cloudinary.v2.uploader.destroy(image_id)
-        const myCloud = await cloudinary.v2.uploader.upload(photo, {
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.coverPhoto, {
             folder: "Drofte",
             crop: "scale"
         })

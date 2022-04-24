@@ -30,12 +30,14 @@ function ProfilePageFeed() {
                   className='w-full h-full border-b'
                 />
               </div>
-              <div className='absolute bottom-0 left-10 object-cover w-40 h-40 '>
-                <img
-                  src={user?.profilePhoto?.url || profile__test__img}
-                  alt="profile "
-                  className='w-full h-full rounded-full border'
-                />
+              <div className='absolute bottom-0 left-10 w-40 h-40 '>
+                <div className='relative w-full h-full  rounded-full'>
+                  <img
+                    src={user?.profilePhoto?.url || profile__test__img}
+                    alt="profile "
+                    className='w-full h-full rounded-full  object-cover border'
+                  />
+                </div>
               </div>
 
               <div

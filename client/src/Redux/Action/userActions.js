@@ -136,9 +136,9 @@ export const updateProfile = (userData) => async (dispatch) => {
     try {
         dispatch({ type: "UPDATE_PROFILE_REQUEST" })
         console.log(userData);
-        const { data } = await axios.put(`/api/v1/profile/update`, userData, {
+        const { data } = await axios.put(`/api/v1/profile/update`, { ...userData }, {
             headers: {
-                "Content-Type": "multipart/form-data"
+                "Content-Type": "application/json"
             }
         })
         dispatch({

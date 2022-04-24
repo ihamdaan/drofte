@@ -13,6 +13,7 @@ import { useAlert } from "react-alert";
 import test__img from "../../images/test_img.jpg";
 import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
 import { MdCancel } from 'react-icons/md';
+import InfiniteScroll from 'react-infinite-scroller';
 
 
 function HomePageFeed() {
@@ -42,7 +43,7 @@ function HomePageFeed() {
       setOpen(false)
       return alert.error("Please fill all the fields")
     }
-    if (!tag.startsWith("#")) {
+    if (tag && !tag.startsWith("#")) {
       setOpen(false)
       return alert.error("Tags must start with a hashtag(#)")
     }
@@ -60,6 +61,9 @@ function HomePageFeed() {
   }
 
   const numberOfPages = Math.ceil(filteredQuesCount / ResultsPerPage)
+  const loadFunc = () => {
+    setPage(page => page + 1)
+  }
 
   useEffect(() => {
     if (error) {
@@ -79,7 +83,11 @@ function HomePageFeed() {
       dispatch({ type: "UPDATE_QUES_RESET" })
     }
     dispatch(getAllQues(undefined, page))
-  }, [dispatch, error, isDeleted, isUpdated, alert, page, isAdded])
+  }, [dispatch, error, isDeleted, isUpdated, alert, isAdded, page, numberOfPages])
+
+  // useEffect(() => {
+  //   dispatch(getAllQues(undefined, page))
+  // }, [])
   return (
     <>
       {
@@ -88,8 +96,8 @@ function HomePageFeed() {
             <div className='sticky text-2xl font-medium'>Home Feed</div>
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line'>
-              <div className="w-14">
-                <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+              <div className='w-14 h-12 '>
+                <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
               </div>
 
               <div className='w-full'>
@@ -99,6 +107,11 @@ function HomePageFeed() {
                 </div>
               </div>
             </div>
+            {/* <InfiniteScroll
+              loadMore={loadFunc}
+              hasMore={numberOfPages > page}
+              loader={<div className="loader" key={0}>Loading ...</div>}
+            > */}
             {ques?.length ?
               ques.map(que => (
                 <HomeFeedPost key={que._id} question={que} />
@@ -107,6 +120,7 @@ function HomePageFeed() {
                 <MdCancel className='text-red-400 text-8xl' />
                 <div className='text-4xl font-bold opacity-60 text-center'>No Questions Found</div>
               </div>}
+            {/* </InfiniteScroll> */}
             {
               ques?.length > 0 &&
               <div className='flex justify-center mt-4'>

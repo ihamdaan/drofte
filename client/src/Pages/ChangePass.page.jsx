@@ -10,7 +10,7 @@ function ChangePass() {
       <Metadata title={"Password Change | DROFTE"} />
       <HomeSidebar />
       <ChangePassPage />
-      {/* <HomePageTrending /> */}
+      <HomePageTrending />
     </div>
   );
 }

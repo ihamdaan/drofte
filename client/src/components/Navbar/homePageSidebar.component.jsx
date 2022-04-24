@@ -194,24 +194,28 @@ const NavLg = ({ user }) => {
               </button> */}
             </div>
 
-            <div className="flex gap-3 p-3 items-center">
-              {
-                user ?
-                  <>
-                    <div className="w-11">
-                      <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+            {
+              user ?
+                <>
+                  <div className="flex gap-2 p-3 items-center justify-evenly">
+                    <div className="">
+                      <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="rounded-full object-cover h-11 w-11" />
                     </div>
 
                     <div className="text-xl leading-5">
                       {user.name} <br />
                       <span className="text-sm text-gray-400">@{user.UID}</span>
                     </div>
-
-                    <button onClick={logoutModal} className="w-9 h-9 text-red-500 hover:text-red-700 cursor-pointer" title="Logout?">
-                      <IoExitOutline className="h-full w-full" />
-                    </button>
-                  </>
-                  :
+                  </div>
+                  <div className="px-5">
+                    <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full">
+                      <button type='button'>Logout </button>
+                      <IoExitOutline className="w-6 h-9 " />
+                    </div>
+                  </div>
+                </>
+                :
+                <div className='flex gap-2 p-3 items-center'>
                   <div className='flex flex-col w-full mx-7'>
                     <button className="mb-2 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => setIsSignOpen(true)}>
                       <div className="w-8 h-8">
@@ -226,8 +230,8 @@ const NavLg = ({ user }) => {
                       <div className="text-lg">Register</div>
                     </button>
                   </div>
-              }
-            </div>
+                </div>
+            }
 
           </div>
         </div>

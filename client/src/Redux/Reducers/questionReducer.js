@@ -28,6 +28,17 @@ export const questionReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
+    MY_ANS_REQUEST: (state) => {
+        state.loading = true
+    },
+    MY_ANS_SUCCESS: (state, action) => {
+        state.loading = false
+        state.myAns = action.payload
+    },
+    MY_ANS_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     ADD_QUES_REQUEST: (state) => {
         state.loading = true
     },

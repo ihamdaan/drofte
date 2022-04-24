@@ -15,6 +15,8 @@ import EditProfilePage from './Pages/EditProfile.page';
 import ChangePass from './Pages/ChangePass.page';
 
 import YourQueries from './Pages/YourQueries.page';
+import YourRemarks from './Pages/YourRemarks.page';
+import AskQuestion from './Pages/AskQuestion.page';
 
 function App() {
   const dispatch = useDispatch()
@@ -40,8 +42,8 @@ function App() {
           <Route path="/profile/edit" element={<EditProfilePage />} />
           <Route path="/password/change" element={<ChangePass />} />
           <Route path="/queries" element={<YourQueries />} />
-          <Route path="/remarks" element={<HomeSidebar />} />
-          <Route path="/question/new" element={<HomeSidebar />} />
+          <Route path="/remarks" element={<YourRemarks />} />
+          <Route path="/question/new" element={<AskQuestion />} />
         </Route>
       </Routes>
     </Router>
