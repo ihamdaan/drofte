@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import "../../index.css";
-import HomeFeedPost from '../HomeFeed/homeFeedPost.component';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader"
 import 'react-quill/dist/quill.snow.css'
@@ -13,20 +12,20 @@ const UserRemarks = () => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
-    const { myAns, loading, error, isDeleted, isUpdated } = useSelector(state => state.questions)
+    const { myAns, loading, error, isDeleted, isUpdated } = useSelector(state => state.answers)
 
     useEffect(() => {
         if (error) {
             alert.error(error)
             dispatch({ type: "CLEAR_ERRORS" })
         }
-        if (isDeleted) {
-            alert.success("Question deleted successfully")
-            dispatch({ type: "DELETE_QUES_RESET" })
-        }
         if (isUpdated) {
-            alert.success("Question updated successfully")
-            dispatch({ type: "UPDATE_QUES_RESET" })
+            alert.success("Answer updated successfully")
+            dispatch({ type: "UPDATE_ANSWER_RESET" })
+        }
+        if (isDeleted) {
+            alert.success("Answer deleted successfully")
+            dispatch({ type: "DELETE_ANSWER_RESET" })
         }
         dispatch(getMyAnsweredQuestions())
     }, [dispatch, error, isDeleted, isUpdated, alert])
@@ -38,7 +37,7 @@ const UserRemarks = () => {
                     myAns?.length ?
                         myAns.map(ans => (
 
-                            <UserRemarksCard key={ans._id} question={ans} />
+                            <UserRemarksCard key={ans._id} answer={ans} />
                         ))
                         :
                         <div className='flex justify-center items-center h-96  flex-col'>

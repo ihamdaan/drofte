@@ -135,7 +135,6 @@ export const logoutUser = () => async (dispatch) => {
 export const updateProfile = (userData) => async (dispatch) => {
     try {
         dispatch({ type: "UPDATE_PROFILE_REQUEST" })
-        console.log(userData);
         const { data } = await axios.put(`/api/v1/profile/update`, { ...userData }, {
             headers: {
                 "Content-Type": "application/json"
@@ -158,7 +157,6 @@ export const updateProfile = (userData) => async (dispatch) => {
 export const changePass = (userData) => async (dispatch) => {
     try {
         dispatch({ type: "UPDATE_PASSWORD_REQUEST" })
-        console.log(userData);
         const { data } = await axios.put(`/api/v1/password/update`, userData, {
             headers: {
                 "Content-Type": "application/json"

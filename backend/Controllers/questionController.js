@@ -38,7 +38,13 @@ exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getSingleQuestion = catchAsyncErrors(async (req, res, next) => {
-    const question = await Question.findById(req.params.questionId).populate("answers", "answer user createdAt");
+    const question = await Question.findById(req.params.questionId).populate({
+        path: "answers",
+        populate: {
+            path: "user",
+            select: "name email profilePhoto date"
+        }
+    }).populate("user", "name email profilePhoto date");
 
     if (!question) {
         return next(new ErrorHandler(400, "No questions found"))
@@ -113,7 +119,7 @@ exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
 exports.getLoggedInUserRemarks = catchAsyncErrors(async (req, res, next) => {
 
     const ResultsPerPage = 2
-    const filteredAnswer = new ApiFeatures(Answer.find({ user: req.user._id }).populate("questionId user"), req.query).search().pagination();
+    const filteredAnswer = new ApiFeatures(Answer.find({ user: req.user._id }).populate("user"), req.query).search().pagination();
     let answers = await filteredAnswer.list;
 
     const filteredQuesCount = answers.length

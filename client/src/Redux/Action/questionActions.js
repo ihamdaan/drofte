@@ -116,7 +116,7 @@ export const getMyQuestions = (keyword, page = 1) => async (dispatch) => {
     }
 }
 
-//Get logged in user's questions
+//Get logged in user's answered questions
 export const getMyAnsweredQuestions = (keyword, page = 1) => async (dispatch) => {
     try {
         dispatch({ type: "MY_ANS_REQUEST" })
@@ -132,6 +132,24 @@ export const getMyAnsweredQuestions = (keyword, page = 1) => async (dispatch) =>
     } catch (error) {
         dispatch({
             type: "MY_ANS_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+//Get single question details
+export const getQuestionDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: "SINGLE_QUES_REQUEST" })
+
+        const { data } = await axios.get(`/api/v1/question/${id}`);
+        dispatch({
+            type: "SINGLE_QUES_SUCCESS",
+            payload: data.question
+        })
+    } catch (error) {
+        dispatch({
+            type: "SINGLE_QUES_FAIL",
             payload: error.response.data.error
         })
     }

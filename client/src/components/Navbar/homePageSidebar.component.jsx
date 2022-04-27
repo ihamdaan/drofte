@@ -55,9 +55,9 @@ const NavMd = () => {
       <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />
 
       <div className="">
-        <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
-          <div className="flex flex-col justify-between h-full items-center">
-            <div className="py-1">
+        <div className="right__border__line top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
+          <div className="flex flex-col  h-full items-center">
+            <div className="py-1 my-5">
               <div className="mb-5 w-10">
                 <img src={drofte__logo__icon} alt="drofte_logo" className="w-full" />
               </div>
@@ -141,8 +141,8 @@ const NavLg = ({ user }) => {
         <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
       }
       <div className="">
-        <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
-          <div className="flex flex-col justify-between h-full">
+        <div className="right__border__line top-0 min-h-screen bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
+          <div className="flex flex-col justify-evenly h-full">
             <div className="px-5 py-1">
               <div className="mb-5">
                 <img src={drofte__logo} alt="drofte_logo" className="w-80" />
@@ -182,16 +182,6 @@ const NavLg = ({ user }) => {
                 </div>
                 <div className="text-xl">Ask Question</div>
               </Link>
-              <Link to={"/settings"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/settings" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
-                <div className="w-8 h-8">
-                  <RiSettingsLine className="w-full h-full" />
-                </div>
-                <div className="text-xl">Settings</div>
-              </Link>
-
-              {/* <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
-                Discuss
-              </button> */}
             </div>
 
             {
@@ -208,7 +198,7 @@ const NavLg = ({ user }) => {
                     </div>
                   </div>
                   <div className="px-5">
-                    <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full">
+                    <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full mb-5">
                       <button type='button'>Logout </button>
                       <IoExitOutline className="w-6 h-9 " />
                     </div>
@@ -217,7 +207,7 @@ const NavLg = ({ user }) => {
                 :
                 <div className='flex gap-2 p-3 items-center'>
                   <div className='flex flex-col w-full mx-7'>
-                    <button className="mb-2 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => setIsSignOpen(true)}>
+                    <button className="mb-4 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signin")}>
                       <div className="w-8 h-8">
                         <PermIdentityTwoToneIcon className="w-full h-full" />
                       </div>

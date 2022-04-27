@@ -79,7 +79,7 @@ const NavLg = ({ handleSubmit, state, handleChange }) => {
   const navigate = useNavigate()
   return (
     <>
-      <div className="bg-bms-400 mx-16 my-6 rounded-lg drop-shadow-2xl">
+      <div className="bg-bms-400 mx-12 my-6 rounded-lg drop-shadow-2xl">
         <div className="text-white mx-12 my-2 flex justify-center items-center">
           <div className="w-full">
             <form onSubmit={handleSubmit} method="post">
@@ -121,7 +121,7 @@ const SignInPageBody = () => {
   const Navigate = useNavigate()
   const alert = useAlert()
   const dispatch = useDispatch();
-  const { user, error, loading, isAuthenticated } = useSelector(state => state.user);
+  const { user, isAuthenticated, error, loading } = useSelector(state => state.user);
 
   const [state, setState] = useState({
     email: "",
@@ -145,16 +145,12 @@ const SignInPageBody = () => {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
-    if (isAuthenticated) {
-      Navigate("/")
-      return
-    }
-    if (user) {
+    if (user && isAuthenticated === true) {
       alert.success(`Logged in successfully`);
       loadUser()
       Navigate("/")
     }
-  }, [error, user, alert, dispatch, Navigate, isAuthenticated])
+  }, [error, user, isAuthenticated, alert, dispatch, Navigate])
 
   return (
     <>

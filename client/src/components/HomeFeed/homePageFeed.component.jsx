@@ -10,10 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Pagination, TextField, Typography } from '@mui/material';
 import { useAlert } from "react-alert";
-import test__img from "../../images/test_img.jpg";
 import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
 import { MdCancel } from 'react-icons/md';
-import InfiniteScroll from 'react-infinite-scroller';
 
 
 function HomePageFeed() {
@@ -21,7 +19,7 @@ function HomePageFeed() {
   const dispatch = useDispatch()
   const alert = useAlert()
   const { ques, loading, error, isDeleted, isUpdated, isAdded, ResultsPerPage, filteredQuesCount } = useSelector(state => state.questions)
-  const { user } = useSelector(state => state.user)
+  const { user, message } = useSelector(state => state.user)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -61,14 +59,15 @@ function HomePageFeed() {
   }
 
   const numberOfPages = Math.ceil(filteredQuesCount / ResultsPerPage)
-  const loadFunc = () => {
-    setPage(page => page + 1)
-  }
 
   useEffect(() => {
     if (error) {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
+    }
+    if (message) {
+      alert.success(message)
+      dispatch({ type: "LOGOUT_RESET" })
     }
     if (isAdded) {
       alert.success("Question added successfully")
@@ -82,12 +81,12 @@ function HomePageFeed() {
       alert.success("Question updated successfully")
       dispatch({ type: "UPDATE_QUES_RESET" })
     }
-    dispatch(getAllQues(undefined, page))
-  }, [dispatch, error, isDeleted, isUpdated, alert, isAdded, page, numberOfPages])
+  }, [dispatch, error, isDeleted, isUpdated, alert, isAdded, message])
 
-  // useEffect(() => {
-  //   dispatch(getAllQues(undefined, page))
-  // }, [])
+  useEffect(() => {
+    dispatch(getAllQues(undefined, page))
+    // eslint-disable-next-line
+  }, [page])
   return (
     <>
       {
@@ -97,7 +96,7 @@ function HomePageFeed() {
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line'>
               <div className='w-14 h-12 '>
-                <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
+                <img src={user?.profilePhoto?.url || "https://res.cloudinary.com/rajat0512/image/upload/v1642447946/E-commerce/avatar_gehm7u.jpg"} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
               </div>
 
               <div className='w-full'>

@@ -1,12 +1,12 @@
 import React from 'react';
-import SignNavbar from '../components/Navbar/signPageNavbar.component';
+import HomeSidebar from '../components/Navbar/homePageSidebar.component'
 import SignUpPageBody from '../components/AuthPages/signUpPage.component';
 
 
 function SignUp() {
   return (
-    <div className="SignUp">
-      <SignNavbar />
+    <div className="SignUp flex">
+      <HomeSidebar />
       <SignUpPageBody />
     </div>
   );

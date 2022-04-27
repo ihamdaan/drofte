@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { getAllQues, getMyAnsweredQuestions } from '../../Redux/Action/questionActions';
+import { getAllQues } from '../../Redux/Action/questionActions';
 
 function HomePageTrending() {
   const [value, setValue] = useState("")
   const dispatch = useDispatch()
-  const location = useLocation()
   useEffect(() => {
-    if (location.pathname === '/') dispatch(getAllQues(value))
-    if (location.pathname === '/remarks') dispatch(getMyAnsweredQuestions(value))
+    dispatch(getAllQues(value))
   }, [dispatch, value])
   return (
     <>

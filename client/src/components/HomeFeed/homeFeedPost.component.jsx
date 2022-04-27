@@ -76,14 +76,14 @@ function HomeFeedPost({ question }) {
                     <img src={question?.user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
                 </div>
 
-                <div className='w-full'>
+                <div className='w-full  overflow-x-auto'>
                     <div className='flex items-center gap-2 pt-2 relative'>
                         <div className='font-medium text-gray-700 text-lg'>
                             {question?.user?.name}
                         </div>
 
                         <div className='font-medium text-gray-500 text-sm'>
-                            #{question?.user?.email}
+                            &lt; {question?.user?.email}&gt;
                         </div>
 
                         <div className='font-medium text-gray-400 text-xs absolute right-0'>
@@ -91,10 +91,10 @@ function HomeFeedPost({ question }) {
                         </div>
                     </div>
 
-                    <div className='pt-4 pb-2'>
+                    <div className='pt-4 pb-2  overflow-x-auto'>
                         <h2 className="font-bold">{question?.title}</h2>
                     </div>
-                    <div className='py-2'>
+                    <div className='py-2 overflow-x-hidden'>
                         {ReactHtmlParser(question?.desc)}
                     </div>
                     <div className='py-2 mb-10'>

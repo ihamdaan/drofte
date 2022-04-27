@@ -1,18 +1,20 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { logoutUser } from '../../Redux/Action/userActions'
 
 export default function LogoutModel({ isOpen, setIsOpen }) {
   const dispatch = useDispatch()
+  const Navigate = useNavigate()
 
   function closeModal() {
     setIsOpen(false)
   }
   const logout = () => {
-    window.location.reload()
     dispatch(logoutUser())
     closeModal()
+    Navigate("/")
   }
 
   return (

@@ -111,7 +111,7 @@ const NavLg = ({ state, handleChange, handleSubmit }) => {
     const navigate = useNavigate()
     return (
         <>
-            <div className="bg-bms-400 mx-16 my-6 rounded-lg drop-shadow-2xl">
+            <div className="bg-bms-400 my-6 rounded-lg drop-shadow-2xl">
                 <div className="text-white mx-20 my-2 flex justify-center items-center gap-9">
                     <div className="w-full order-2">
                         <div className="mb-12 mt-8">

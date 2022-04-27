@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Loader from './components/Loader/Loader';
 import SignIn from './Pages/SignIn.page';
 import SignUp from './Pages/SignUp.page';
 import ForgetPass from './Pages/ForgetPass.page';
@@ -17,6 +16,7 @@ import ChangePass from './Pages/ChangePass.page';
 import YourQueries from './Pages/YourQueries.page';
 import YourRemarks from './Pages/YourRemarks.page';
 import AskQuestion from './Pages/AskQuestion.page';
+import ViewQuestion from './Pages/ViewQuestion.page';
 
 function App() {
   const dispatch = useDispatch()
@@ -33,7 +33,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/password/forget" element={<ForgetPass />} />
         <Route exact path="/api/v1/resetPassword/:token" element={<NewPass />} />
-        <Route exact path="/question/:id" element={<Loader />} />
+        <Route exact path="/question/:id" element={<ViewQuestion />} />
 
         {/* Logged in user routes */}
         <Route element={<ProtectedRoute />}>
@@ -45,6 +45,7 @@ function App() {
           <Route path="/remarks" element={<YourRemarks />} />
           <Route path="/question/new" element={<AskQuestion />} />
         </Route>
+
       </Routes>
     </Router>
   );
