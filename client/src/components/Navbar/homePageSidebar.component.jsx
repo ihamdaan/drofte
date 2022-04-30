@@ -44,71 +44,63 @@ const NavSm = () => {
 
 //Tab Screen
 const NavMd = () => {
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isSignOpen, setIsSignOpen] = useState(false);
+  //const Navigate = useNavigate()
+  const location = useLocation()
 
   const logoutModal = () => {
     setIsOpen(true);
   };
   
-  const Navigate = useNavigate()
+  //const Navigate = useNavigate()
 
   return (
     <>
       <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />
 
       <div className="">
-        <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
-          <div className="flex flex-col justify-between h-full items-center">
-            <div className="py-1">
-              <div className="mb-5 w-10 cursor-pointer" onClick={() => Navigate("/")}>
+        <div className="right__border__line top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
+          <div className="flex flex-col  h-full items-center">
+            <div className="py-1 my-5">
+              <div className="mb-5 w-10">
                 <img src={drofte__logo__icon} alt="drofte_logo" className="w-full" />
               </div>
 
               <div className='flex flex-col items-center'>
-                <button title='Home' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/" title='Home' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <BiHomeCircle className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Your Queries' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+
+                <Link to="/queries" title='Your Queries' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/queries" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <RiQuestionnaireLine className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Your Remarks' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/remarks" title='Your Remarks' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/remarks" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <AiOutlineSolution className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Notifications' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
-                  <div className="w-8 h-8">
-                    <BiPlusCircle className="w-full h-full" />
-                  </div>
-                </button>
-
-                <button title='Profile' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/profile" title='Profile' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <CgProfile className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Settings' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/question/new" title='Ask Question' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <RiSettingsLine className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
               </div>
 
-              <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
-                Discuss
-              </button>
             </div>
 
             <div className="flex gap-3 items-center">
@@ -148,10 +140,10 @@ const NavLg = ({ user }) => {
         <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
       }
       <div className="">
-        <div className="right__border__line min-h-screen top-0 bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
-          <div className="flex flex-col justify-between h-full">
+        <div className="right__border__line top-0 min-h-screen bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
+          <div className="flex flex-col justify-evenly h-full">
             <div className="px-5 py-1">
-              <div className="mb-5 cursor-pointer" onClick={() => Navigate("/")}>
+              <div className="mb-8 top-0 cursor-pointer" onClick={() => Navigate("/")}>
                 <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
               </div>
 
@@ -189,53 +181,49 @@ const NavLg = ({ user }) => {
                 </div>
                 <div className="text-xl">Profile</div>
               </Link>
-
-              <Link to={"/settings"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/settings" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
-                <div className="w-8 h-8">
-                  <RiSettingsLine className="w-full h-full" />
-                </div>
-                <div className="text-xl">Settings</div>
-              </Link>
-
-              {/* <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
-                Discuss
-              </button> */}
             </div>
 
-            <div className="flex gap-3 p-3 items-center">
-              {
-                user ?
-                  <>
-                    <div className="w-11">
-                      <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
-                    </div>
+            {
+              user ?
+                <>
+                  <div>
+                    <Link to={"/profile"} className="flex gap-2 p-3 justify-center cursor-pointer">
+                      <div className="">
+                        <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="rounded-full object-cover h-11 w-11" />
+                      </div>
 
-                    <div className="text-xl leading-5">
-                      {user.name} <br />
-                      <span className="text-sm text-gray-400">@{user.UID}</span>
-                    </div>
+                      <div className="text-xl leading-5">
+                        {user.name} <br />
+                        <span className="text-sm text-gray-400">@{user.UID}</span>
+                      </div>
+                    </Link>
 
-                    <button onClick={logoutModal} className="w-9 h-9 text-red-500 hover:text-red-700 cursor-pointer" title="Logout?">
-                      <IoExitOutline className="h-full w-full" />
-                    </button>
-                  </>
-                  :
+                    <Link className="px-5">
+                      <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full mb-5">
+                        <button type='button'>Logout </button>
+                        <IoExitOutline className="w-6 h-9 " />
+                      </div>
+                    </Link>
+                  </div>
+                </>
+                :
+                <div className='flex gap-2 p-3 items-center'>
                   <div className='flex flex-col w-full mx-7'>
-                    <button className="mb-2 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-600 hover:bg-gray-300 w-full bg-bms-400 text-white font-bold" onClick={() => setIsSignOpen(true)}>
+                    <button className="mb-4 p-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signin")}>
                       <div className="w-8 h-8">
                         <PermIdentityTwoToneIcon className="w-full h-full" />
                       </div>
                       <div className="text-lg">Login</div>
                     </button>
-                    <button className="py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-600 hover:bg-gray-300 w-full bg-bms-400 text-white font-bold" onClick={() => Navigate("/signup")}>
+                    <button className=" p-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signup")}>
                       <div className="w-8 h-8">
                         <PersonAddAltTwoToneIcon className="w-full h-full" />
                       </div>
                       <div className="text-lg">Register</div>
                     </button>
                   </div>
-              }
-            </div>
+                </div>
+            }
 
           </div>
         </div>
@@ -251,7 +239,7 @@ const HomeSidebar = () => {
   return (
     <>
       <div className="">
-        <div className="md:hidden">
+        <div className="md:hidden sm:flex">
           {/*Small Screen*/}
           <NavSm user={user} />
         </div>

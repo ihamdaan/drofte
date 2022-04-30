@@ -62,3 +62,69 @@ exports.deleteAnswer = catchAsyncErrors(async (req, res, next) => {
     return res.status(200).json({ success: true, message: "Answer deleted successfully." });
 
 })
+
+exports.likeAndUnlikeAnswer = catchAsyncErrors(async (req, res) => {
+    const ansId = req.params.ansId;
+    const answer = await Answer.findById(ansId);
+    if (!answer) {
+        return res.status(404).json({
+            success: false,
+            message: "Answer not found",
+        });
+    }
+    if (await answer.likes.includes(req.user._id.toString())) {
+        answer.likes = answer.likes.filter(like => like.toString() !== req.user._id.toString());
+        await answer.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Answer Unliked",
+            isLiked: false,
+        });
+    } else {
+        if (await answer.dislikes.includes(req.user._id.toString())) {
+            answer.dislikes = answer.dislikes.filter(dislike => dislike.toString() !== req.user._id.toString());
+        }
+        answer.likes.push(req.user._id.toString());
+        await answer.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Answer Liked",
+            isLiked: true,
+        });
+    }
+})
+
+exports.DislikeAnswer = catchAsyncErrors(async (req, res) => {
+    const ansId = req.params.ansId;
+    const answer = await Answer.findById(ansId);
+    if (!answer) {
+        return res.status(404).json({
+            success: false,
+            message: "Answer not found",
+        });
+    }
+    if (await answer.dislikes.includes(req.user._id.toString())) {
+        answer.dislikes = answer.dislikes.filter(dislike => dislike.toString() !== req.user._id.toString());
+        await answer.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Removed Dislike",
+            isDisliked: false,
+        });
+    } else {
+        if (await answer.likes.includes(req.user._id.toString())) {
+            answer.likes = answer.likes.filter(like => like.toString() !== req.user._id.toString());
+        }
+        answer.dislikes.push(req.user._id.toString());
+        await answer.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Answer Disliked",
+            isDisliked: true,
+        });
+    }
+})

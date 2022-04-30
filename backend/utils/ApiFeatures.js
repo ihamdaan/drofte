@@ -17,12 +17,12 @@ class ApiFeatures {
                                 $regex: search[i], $options: 'i'
                             }
                         },
-                        {
-                            desc:
-                            {
-                                $regex: search[i], $options: 'i'
-                            }
-                        },
+                        // {
+                        //     desc:
+                        //     {
+                        //         $regex: search[i], $options: 'i'
+                        //     }
+                        // },
                         {
                             tags: {
                                 $in: new RegExp(search[i], 'i'),
@@ -34,6 +34,7 @@ class ApiFeatures {
         }
         return this
     }
+
     pagination(ResultsPerPage) {
         let CurrentPage = Number(this.query.page) || 1
         const skip = ResultsPerPage * (CurrentPage - 1)

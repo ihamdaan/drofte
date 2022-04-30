@@ -18,13 +18,14 @@ exports.createQuestion = catchAsyncErrors(async (req, res, next) => {
 exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
     const numberOfDocuments = await Question.countDocuments();
     const ResultsPerPage = 3
-    const filteredQues = new ApiFeatures(Question.find().populate({
+    const AllQues = Question.find().populate({
         path: "answers",
         populate: {
             path: "user",
             select: "name email profilePhoto"
         }
-    }).populate("user", "name email profilePhoto"), req.query).search();
+    }).populate("user", "name email profilePhoto").sort({ createdAt: -1 });
+    const filteredQues = new ApiFeatures(AllQues, req.query).search();
     let data = await filteredQues.list;
 
     const filteredQuesCount = data.length
@@ -37,7 +38,13 @@ exports.getAllQuestions = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getSingleQuestion = catchAsyncErrors(async (req, res, next) => {
-    const question = await Question.findById(req.params.questionId).populate("answers", "answer user createdAt");
+    const question = await Question.findById(req.params.questionId).populate({
+        path: "answers",
+        populate: {
+            path: "user",
+            select: "name email profilePhoto date"
+        }
+    }).populate("user", "name email profilePhoto date");
 
     if (!question) {
         return next(new ErrorHandler(400, "No questions found"))
@@ -95,7 +102,7 @@ exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
         populate: {
             path: "user",
         }
-    }).populate("user", "name email"), req.query).search().pagination();
+    }).populate("user"), req.query).search().pagination();
     let questions = await filteredQues.list;
 
     const filteredQuesCount = questions.length
@@ -107,4 +114,30 @@ exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
     }
 
     return res.status(200).json({ success: true, questions, ResultsPerPage, filteredQuesCount });
+})
+
+exports.getLoggedInUserRemarks = catchAsyncErrors(async (req, res, next) => {
+
+    const ResultsPerPage = 2
+    const filteredAnswer = new ApiFeatures(Answer.find({ user: req.user._id }).populate("user"), req.query).search().pagination();
+    let answers = await filteredAnswer.list;
+
+    const filteredQuesCount = answers.length
+    filteredAnswer.pagination(ResultsPerPage);
+    answers = await filteredAnswer.list.clone();
+
+    if (!answers) {
+        return next(new ErrorHandler(404, "No answers found"));
+    }
+
+    return res.status(200).json({ success: true, answers, ResultsPerPage, filteredQuesCount });
+})
+
+exports.getAllTags = catchAsyncErrors(async (req, res, next) => {
+
+    const tags = await Question.distinct("tags");
+    if (!tags) {
+        return next(new ErrorHandler(404, "No tags found"));
+    }
+    return res.status(200).json({ success: true, tags });
 })

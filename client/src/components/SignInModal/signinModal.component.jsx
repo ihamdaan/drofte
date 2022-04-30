@@ -18,7 +18,7 @@ export default function SignInModal({ isSignOpen, setIsSignOpen }) {
   const Navigate = useNavigate()
   const alert = useAlert()
   const dispatch = useDispatch();
-  const { user, error, isAuthenticated } = useSelector(state => state.user);
+  const { user, error } = useSelector(state => state.user);
 
   const [state, setState] = useState({
     email: "",
@@ -42,23 +42,20 @@ export default function SignInModal({ isSignOpen, setIsSignOpen }) {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
-    if (isAuthenticated === true) {
-      Navigate("/")
-      return
-    }
     if (user) {
-      alert.success(`Logged in successfully`);
       closeModal()
       Navigate("/")
+      alert.success(`Logged in successfully`);
     }
-  }, [error, user, alert, dispatch, Navigate, isAuthenticated])
+    // eslint-disable-next-line
+  }, [error, user, alert, dispatch, Navigate])
 
   return (
     <>
       <Transition appear show={isSignOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto z-50"
+          className="fixed inset-0 overflow-y-auto z-50"
           onClose={closeModal}
         >
           <div className="min-h-screen px-4 text-center ">

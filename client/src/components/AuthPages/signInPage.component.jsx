@@ -7,24 +7,23 @@ import { loadUser, loginUser } from "../../Redux/Action/userActions";
 import Loader from "../Loader/Loader";
 
 //Mobile Screen
-const NavSm = () => {
-  const navigate = useNavigate()
+const NavSm = ({ handleSubmit, state, handleChange, navigate }) => {
   return (
     <>
-      <div className="text-black mx-1">
+      <form onSubmit={handleSubmit} className="text-black mx-1">
         <div className="mb-12 mt-8">
           <h1 className="text-bms-400 text-5xl font-semibold">Sign In!</h1>
         </div>
         <div className="my-8">
           <div className="mb-6">
             <label htmlFor="username" className="text-2xl">Username</label> <br />
-            <input type="text" placeholder="eg: dobbeX@19" className="w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" />
+            <input type="text" placeholder="eg: dobbeX@19" className="w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" name="email" value={state.email} onChange={handleChange} required />
           </div>
           <div className="mb-8">
             <label htmlFor="password" className="text-2xl">Password</label> <br />
-            <input type="password" placeholder="password" className="w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" />
+            <input type="password" placeholder="password" className="w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" name="password" value={state.password} onChange={handleChange} required />
           </div>
-          <button className="text-white bg-bms-400 px-3 py-2 text-2xl rounded-lg focus:bg-bms-100 focus:text-gray-500">Sign In</button>
+          <button className="text-white bg-bms-400 px-3 py-2 text-2xl rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit">Sign In</button>
         </div>
         <div className="my-6">
           <span><h3 className="text-gray-400 hover:text-red-400" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
@@ -33,37 +32,36 @@ const NavSm = () => {
         <div className=" w-full mt-16">
           <img src={login__img} alt="login__img" />
         </div>
-      </div>
+      </form>
     </>
   );
 };
 
 //Tab Screen
-const NavMd = () => {
-  const navigate = useNavigate()
+const NavMd = ({ handleSubmit, state, handleChange, navigate }) => {
   return (
     <>
       <div className="text-black mx-8 my-8 flex justify-center items-center">
-        <div className="w-full">
+        <form method="post" onSubmit={handleSubmit} className="w-full">
           <div className="mb-12 mt-8">
             <h1 className="text-bms-400 text-5xl font-bold">Sign In!</h1>
           </div>
           <div className="my-8">
             <div className="mb-6">
-              <label htmlFor="username" className="text-xl">Username</label> <br />
-              <input type="text" placeholder="eg: kobey#93" className=" w-5/6 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" />
+              <label htmlFor="email" className="text-xl">Email</label> <br />
+              <input type="text" placeholder="eg: kobey#93" className=" w-5/6 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" name="email" onChange={handleChange} value={state.email} required />
             </div>
             <div className="mb-8">
               <label htmlFor="password" className="text-xl">Password</label> <br />
-              <input type="password" placeholder="password" className=" w-5/6 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" />
+              <input type="password" placeholder="password" className=" w-5/6 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" name="password" onChange={handleChange} value={state.password} required />
             </div>
-            <button className="text-white bg-bms-400 px-3 py-2 text-lg rounded-lg focus:bg-bms-100 focus:text-gray-500">Sign In</button>
+            <button className="text-white bg-bms-400 px-3 py-2 text-lg rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit">Sign In</button>
           </div>
           <div className="my-6">
             <span><h3 className="text-gray-400 hover:text-red-400 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
             <span><h3 className="text-gray-400">Don't have an account? <span className="cursor-pointer hover:text-bms-500 underline underline-offset-4" onClick={() => navigate("/signup")}>Sign Up</span></h3></span>
           </div>
-        </div>
+        </form>
         <div>
           <div className=" w-full mt-16">
             <img src={login__img} alt="login__img" />
@@ -75,20 +73,19 @@ const NavMd = () => {
 };
 
 //Laptop Screen
-const NavLg = ({ handleSubmit, state, handleChange }) => {
-  const navigate = useNavigate()
+const NavLg = ({ handleSubmit, state, handleChange, navigate }) => {
   return (
     <>
-      <div className="bg-bms-400 mx-20 w-full h-3/4 my-6 rounded-lg drop-shadow-2xl">
+      <div className="bg-bms-400 mx-12 my-6 rounded-lg drop-shadow-2xl">
         <div className="text-white mx-12 my-2 flex justify-center items-center">
           <div className="w-full">
             <form onSubmit={handleSubmit} method="post">
               <div className="mb-12 mt-8">
-                <h1 className="text-5xl font-semibold">Sign In!</h1>
+                <div className="text-5xl font-semibold">Sign In!</div>
               </div>
               <div className="my-8">
                 <div className="mb-6">
-                  <label htmlFor="username" className="text-xl">Email</label> <br />
+                  <label htmlFor="email" className="text-xl">Email</label> <br />
                   <input type="email" placeholder="eg: 00ABC000@cuchd.in" className=" w-3/4 text-black text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100" title="enter your official email" required name="email" value={state.email} onChange={handleChange} />
                 </div>
                 <div className="mb-8">
@@ -98,8 +95,8 @@ const NavLg = ({ handleSubmit, state, handleChange }) => {
                 <button className="text-bms-400 bg-gray-200 px-3 py-2 text-lg hover:bg-white rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit">Sign In</button>
               </div>
               <div className="my-6">
-                <span><h3 className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
-                <span><h3 className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></h3></span>
+                <span><div className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</div></span>
+                <span><div className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></div></span>
               </div>
             </form>
           </div>
@@ -121,7 +118,7 @@ const SignInPageBody = () => {
   const Navigate = useNavigate()
   const alert = useAlert()
   const dispatch = useDispatch();
-  const { user, error, loading, isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated, error, loading } = useSelector(state => state.user);
 
   const [state, setState] = useState({
     email: "",
@@ -145,35 +142,31 @@ const SignInPageBody = () => {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
-    if (isAuthenticated) {
-      Navigate("/")
-      return
-    }
-    if (user) {
+    if (isAuthenticated === true) {
       alert.success(`Logged in successfully`);
       loadUser()
       Navigate("/")
     }
-  }, [error, user, alert, dispatch, Navigate, isAuthenticated])
+  }, [error, isAuthenticated, alert, dispatch, Navigate])
 
   return (
     <>
       {
         loading ? <Loader /> :
           <div className="p-4">
-            <div className="md:hidden">
+            <div className="md:hidden ">
               {/*Small Screen*/}
-              <NavSm handleSubmit={handleSubmit} state={state} handleChange={handleChange} />
+              <NavSm handleSubmit={handleSubmit} state={state} handleChange={handleChange} navigate={Navigate} />
             </div>
 
-            <div className="hidden md:flex lg:hidden">
+            <div className="hidden bg-gray-50 md:flex lg:hidden">
               {/*Medium Screen*/}
-              <NavMd handleSubmit={handleSubmit} state={state} handleChange={handleChange} />
+              <NavMd handleSubmit={handleSubmit} state={state} handleChange={handleChange} navigate={Navigate} />
             </div>
 
             <div className="hidden lg:flex">
               {/*Large Screen*/}
-              <NavLg handleSubmit={handleSubmit} state={state} handleChange={handleChange} />
+              <NavLg handleSubmit={handleSubmit} state={state} handleChange={handleChange} navigate={Navigate} />
             </div>
           </div>
       }

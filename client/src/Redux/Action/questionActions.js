@@ -6,8 +6,11 @@ export const getAllQues = (keyword = "", page = 1) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_QUES_REQUEST" })
         let link = `/api/v1/question/all?page=${page}`
+
         if (keyword !== "") {
-            link = `/api/v1/question/all?keyword=${keyword}`
+
+            var newURL = encodeURIComponent(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+            link = `/api/v1/question/all?keyword=+${newURL}`
         }
         const { data } = await axios.get(link, {
             headers: {
@@ -111,6 +114,63 @@ export const getMyQuestions = (keyword, page = 1) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "MY_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+//Get logged in user's answered questions
+export const getMyAnsweredQuestions = (keyword, page = 1) => async (dispatch) => {
+    try {
+        dispatch({ type: "MY_ANS_REQUEST" })
+        let link = `/api/v1/question/my/answers?page=${page}`
+        if (keyword) {
+            link = `/api/v1/question/my/answers?keyword=${keyword}&page=${page}`
+        }
+        const { data } = await axios.get(link);
+        dispatch({
+            type: "MY_ANS_SUCCESS",
+            payload: data.answers
+        })
+    } catch (error) {
+        dispatch({
+            type: "MY_ANS_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+//Get single question details
+export const getQuestionDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: "SINGLE_QUES_REQUEST" })
+
+        const { data } = await axios.get(`/api/v1/question/${id}`);
+        dispatch({
+            type: "SINGLE_QUES_SUCCESS",
+            payload: data.question
+        })
+    } catch (error) {
+        dispatch({
+            type: "SINGLE_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+//Get all Tags
+export const getAllTags = () => async (dispatch) => {
+    try {
+        dispatch({ type: "TAGS_REQUEST" })
+
+        const { data } = await axios.get(`/api/v1/question/tags`);
+        dispatch({
+            type: "TAGS_SUCCESS",
+            payload: data.tags
+        })
+    } catch (error) {
+        dispatch({
+            type: "TAGS_FAIL",
             payload: error.response.data.error
         })
     }

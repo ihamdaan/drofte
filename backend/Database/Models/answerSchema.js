@@ -19,7 +19,19 @@ const answerSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    likes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    dislikes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User"
+        }
+    ]
 
 });
 

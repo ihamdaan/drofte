@@ -11,13 +11,13 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
 import { useEffect, useState } from "react";
-import { updateProfile } from "../../Redux/Action/userActions";
+import { loadUser, updateProfile } from "../../Redux/Action/userActions";
 
 
 function ProfilePageFeed() {
 
-  const { loading, user } = useSelector(state => state.user)
-  const { isUpdated, error } = useSelector(state => state.profile)
+  const { user } = useSelector(state => state.user)
+  const { isUpdated, error, loading } = useSelector(state => state.profile)
   const alert = useAlert()
   const Navigate = useNavigate();
   const dispatch = useDispatch()
@@ -26,7 +26,9 @@ function ProfilePageFeed() {
   const coverFile = useRef()
 
   const [Avatar, setAvatar] = useState("")
+  const [AvatarPreview, setAvatarPreview] = useState("")
   const [cover, setCover] = useState("")
+  const [coverPreview, setCoverPreview] = useState("")
   const [state, setState] = useState({
     name: "",
     bio: "",
@@ -47,7 +49,13 @@ function ProfilePageFeed() {
       reader.readAsDataURL(e.target.files[0])
       reader.onload = () => {
         if (reader.readyState === 2) {
-          name === "photo" ? setAvatar(reader.result) : setCover(reader.result)
+          if (name === "photo") {
+            setAvatar(reader.result)
+            setAvatarPreview(reader.result)
+          } else {
+            setCover(reader.result)
+            setCoverPreview(reader.result)
+          }
         }
       }
     }
@@ -63,14 +71,6 @@ function ProfilePageFeed() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // const formData = new FormData()
-    // formData.append("name", state.name)
-    // formData.append("bio", state.bio)
-    // formData.append("branch", state.branch)
-    // formData.append("profilePhoto", Avatar)
-    // formData.append("coverPhoto", cover)
-    // formData.append("links", links)
-
     dispatch(updateProfile({ ...state, profilePhoto: Avatar, coverPhoto: cover, links }))
   }
 
@@ -78,9 +78,11 @@ function ProfilePageFeed() {
     if (isUpdated) {
       alert.success("Profile Updated Successfully")
       dispatch({ type: "UPDATE_PROFILE_RESET" })
+      dispatch(loadUser())
+      Navigate("/profile")
     }
     if (error) {
-      alert.success("Profile Updated Successfully")
+      alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
 
@@ -89,14 +91,16 @@ function ProfilePageFeed() {
   useEffect(() => {
     setState({
       name: user?.name || "",
-      bio: user?.bio || ""
+      bio: user?.bio || "",
+      branch: user?.branch || ""
     })
     setLinks({
       LinkedIn: user?.links?.LinkedIn || "",
       Twitter: user?.links?.Twitter || "",
       Instagram: user?.links?.Instagram || ""
     })
-    setAvatar(user?.profilePhoto?.url || profile__test__img)
+    setAvatarPreview(user?.profilePhoto?.url || "")
+    setCoverPreview(user?.coverPhoto?.url || "")
   }, [user])
 
   return (
@@ -122,7 +126,7 @@ function ProfilePageFeed() {
               <div className='profile_header relative h-80 mt-2'>
                 <div className='object-cover h-60 w-full relative'>
                   <img
-                    src={cover || profile__bg__test__img}
+                    src={coverPreview || profile__bg__test__img}
                     alt="background"
                     className='w-full h-full border-b'
                   />
@@ -131,12 +135,12 @@ function ProfilePageFeed() {
                     Add Image
                   </div>
                 </div>
-                <div className='absolute bottom-0 left-10 object-cover w-40 h-40 '>
+                <div className='absolute bottom-0 left-10 w-40 h-40 '>
                   <div className='relative w-full h-full'>
                     <img
-                      src={Avatar}
+                      src={AvatarPreview}
                       alt="profile "
-                      className='w-full h-full rounded-full border'
+                      className='w-full h-full rounded-full border object-cover'
                     />
                     <TiEdit
                       title='Edit Your Profile Image'

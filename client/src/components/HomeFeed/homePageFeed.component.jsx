@@ -10,7 +10,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Pagination, TextField, Typography } from '@mui/material';
 import { useAlert } from "react-alert";
-import test__img from "../../images/test_img.jpg";
 import { addQuestion, getAllQues } from '../../Redux/Action/questionActions';
 import { MdCancel } from 'react-icons/md';
 
@@ -20,7 +19,7 @@ function HomePageFeed() {
   const dispatch = useDispatch()
   const alert = useAlert()
   const { ques, loading, error, isDeleted, isUpdated, isAdded, ResultsPerPage, filteredQuesCount } = useSelector(state => state.questions)
-  const { user } = useSelector(state => state.user)
+  const { user, message } = useSelector(state => state.user)
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -42,7 +41,7 @@ function HomePageFeed() {
       setOpen(false)
       return alert.error("Please fill all the fields")
     }
-    if (!tag.startsWith("#")) {
+    if (tag && !tag.startsWith("#")) {
       setOpen(false)
       return alert.error("Tags must start with a hashtag(#)")
     }
@@ -66,6 +65,10 @@ function HomePageFeed() {
       alert.error(error)
       dispatch({ type: "CLEAR_ERRORS" })
     }
+    if (message) {
+      alert.success(message)
+      dispatch({ type: "LOGOUT_RESET" })
+    }
     if (isAdded) {
       alert.success("Question added successfully")
       dispatch({ type: "ADD_QUES_RESET" })
@@ -78,27 +81,36 @@ function HomePageFeed() {
       alert.success("Question updated successfully")
       dispatch({ type: "UPDATE_QUES_RESET" })
     }
+  }, [dispatch, error, isDeleted, isUpdated, alert, isAdded, message])
+
+  useEffect(() => {
     dispatch(getAllQues(undefined, page))
-  }, [dispatch, error, isDeleted, isUpdated, alert, page, isAdded])
+    // eslint-disable-next-line
+  }, [page])
   return (
     <>
       {
         loading ? <Loader /> :
           <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-            <div className='sticky text-2xl font-medium'>Home Feed</div>
+            <div className='text-2xl font-medium sticky'>Home Feed</div>
 
-            <div className='my-2 py-2 flex gap-8 bottom__border__line'>
-              <div className="w-14">
-                <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full" />
+            <div className='my-2 py-2 flex gap-8 bottom__border__line justify-center items-center'>
+              <div className='w-14 h-12 ml-3'>
+                <img src={user?.profilePhoto?.url || "https://res.cloudinary.com/rajat0512/image/upload/v1642447946/E-commerce/avatar_gehm7u.jpg"} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
               </div>
 
               <div className='w-full'>
-                <div className='text-gray-400 cursor-pointer text-xl pt-4' onClick={handleSetOpen}>
-                  Ask your Questions here!
+                <div className='text-gray-400 cursor-pointer text-xl' onClick={handleSetOpen}>
+                  Ask a Question!
 
                 </div>
               </div>
             </div>
+            {/* <InfiniteScroll
+              loadMore={loadFunc}
+              hasMore={numberOfPages > page}
+              loader={<div className="loader" key={0}>Loading ...</div>}
+            > */}
             {ques?.length ?
               ques.map(que => (
                 <HomeFeedPost key={que._id} question={que} />
@@ -107,6 +119,7 @@ function HomePageFeed() {
                 <MdCancel className='text-red-400 text-8xl' />
                 <div className='text-4xl font-bold opacity-60 text-center'>No Questions Found</div>
               </div>}
+            {/* </InfiniteScroll> */}
             {
               ques?.length > 0 &&
               <div className='flex justify-center mt-4'>
@@ -130,9 +143,9 @@ function HomePageFeed() {
                 />
                 <TextField label="Tags" variant="outlined" fullWidth value={tag} onChange={(e) => setTag(e.target.value)} helperText="Please use # at the beginning of the tag" />
               </DialogContent>
-              <DialogActions>
-                <button className='bg-red-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={handleClose}>Cancel</button>
-                <button className='bg-bms-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={postData}>Post</button>
+              <DialogActions className='my-3'>
+                <button className='bg-red-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded hover:bg-red-500' onClick={handleClose}>Cancel</button>
+                <button className='bg-bms-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded hover:bg-bms-500' onClick={postData}>Post</button>
               </DialogActions>
             </Dialog>
           </div>

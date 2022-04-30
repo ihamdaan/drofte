@@ -1,18 +1,17 @@
 import React from 'react';
-import SignNavbar from '../components/Navbar/signPageNavbar.component';
 import SignInPageBody from '../components/AuthPages/signInPage.component';
-import { Helmet } from 'react-helmet';
+import HomeSidebar from '../components/Navbar/homePageSidebar.component'
 
 
 function SignIn() {
   return (
-    <div className="SignIn bg-gray-50 min-h-screen">
-      <Helmet>
-        <title>SignIn | DROFTE</title>
-      </Helmet>
-      <SignNavbar />
-      <SignInPageBody />
-    </div>
+    <>
+      <div className="SignIn max-h-screen flex max-w-7xl mx-auto">
+        {/*Large Screen*/}
+        <HomeSidebar />
+        <SignInPageBody />
+      </div>
+    </>
   );
 }
 

@@ -17,6 +17,17 @@ export const questionReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
+    SINGLE_QUES_REQUEST: (state) => {
+        state.loading = true
+    },
+    SINGLE_QUES_SUCCESS: (state, action) => {
+        state.loading = false
+        state.currentQuestion = action.payload
+    },
+    SINGLE_QUES_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     MY_QUES_REQUEST: (state) => {
         state.loading = true
     },
@@ -68,6 +79,17 @@ export const questionReducer = createReducer(initialState, {
         state.isUpdated = false
     },
     UPDATE_QUES_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
+    TAGS_REQUEST: (state) => {
+        state.loading = true
+    },
+    TAGS_SUCCESS: (state, action) => {
+        state.loading = false
+        state.tags = action.payload
+    },
+    TAGS_FAIL: (state, action) => {
         state.loading = false
         state.error = action.payload
     },
