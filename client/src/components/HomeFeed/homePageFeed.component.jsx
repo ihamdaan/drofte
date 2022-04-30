@@ -92,15 +92,15 @@ function HomePageFeed() {
       {
         loading ? <Loader /> :
           <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-            <div className='sticky text-2xl font-medium'>Home Feed</div>
+            <h1 className='sticky'>Home Feed</h1>
 
-            <div className='my-2 py-2 flex gap-8 bottom__border__line'>
-              <div className='w-14 h-12 '>
+            <div className='my-2 py-2 flex gap-8 bottom__border__line justify-center items-center'>
+              <div className='w-14 h-12 ml-3'>
                 <img src={user?.profilePhoto?.url || "https://res.cloudinary.com/rajat0512/image/upload/v1642447946/E-commerce/avatar_gehm7u.jpg"} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
               </div>
 
               <div className='w-full'>
-                <div className='text-gray-400 cursor-pointer text-xl pt-4' onClick={handleSetOpen}>
+                <div className='text-gray-400 cursor-pointer text-xl' onClick={handleSetOpen}>
                   Ask a Question!
 
                 </div>
@@ -143,9 +143,9 @@ function HomePageFeed() {
                 />
                 <TextField label="Tags" variant="outlined" fullWidth value={tag} onChange={(e) => setTag(e.target.value)} helperText="Please use # at the beginning of the tag" />
               </DialogContent>
-              <DialogActions>
-                <button className='bg-red-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={handleClose}>Cancel</button>
-                <button className='bg-bms-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded-2xl' onClick={postData}>Post</button>
+              <DialogActions className='my-3'>
+                <button className='bg-red-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded hover:bg-red-500' onClick={handleClose}>Cancel</button>
+                <button className='bg-bms-400 mx-2 mb-3 text-lg text-white font-medium px-4 py-1 rounded hover:bg-bms-500' onClick={postData}>Post</button>
               </DialogActions>
             </Dialog>
           </div>

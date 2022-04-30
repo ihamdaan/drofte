@@ -50,6 +50,33 @@ export const answerReducer = createReducer({}, {
         state.loading = false
         state.error = action.payload
     },
+    LIKE_REQUEST: (state) => {
+        state.loading = true
+    },
+    LIKE_SUCCESS: (state, action) => {
+        state.loading = false
+        state.message = action.payload.message
+        state.isLiked = action.payload.isLiked
+    },
+    LIKE_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
+    DISLIKE_REQUEST: (state) => {
+        state.loading = true
+    },
+    DISLIKE_SUCCESS: (state, action) => {
+        state.loading = false
+        state.message = action.payload.message
+        state.isDisliked = action.payload.isDisliked
+    },
+    DISLIKE_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
+    RESET_MESSAGE: (state) => {
+        state.message = null
+    },
     CLEAR_ERRORS: (state) => {
         state.error = null
     }

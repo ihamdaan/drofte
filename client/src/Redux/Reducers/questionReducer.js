@@ -82,6 +82,17 @@ export const questionReducer = createReducer(initialState, {
         state.loading = false
         state.error = action.payload
     },
+    TAGS_REQUEST: (state) => {
+        state.loading = true
+    },
+    TAGS_SUCCESS: (state, action) => {
+        state.loading = false
+        state.tags = action.payload
+    },
+    TAGS_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     CLEAR_ERRORS: (state) => {
         state.error = null
     }

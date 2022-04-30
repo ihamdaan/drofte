@@ -56,21 +56,21 @@ export default function LogoutModel({ isOpen, setIsOpen }) {
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  as="h2"
+                  className="text-lg font-medium leading-6 text-gray-900 py-3"
                 >
                   Logout
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 pb-3">
                     Do you want to exit your Drofte account?
                   </p>
                 </div>
 
-                <div className="mt-4 w-full">
+                <div className="mt-4 mb-2 w-full flex">
                   <button
                     type="button"
-                    className="w-full bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-red-600 border border-transparent rounded-md hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 mb-1"
+                    className="w-full bg-gray-100 inline-flex justify-center px-4 py-2 text-sm font-medium text-red-600 border border-transparent rounded-md hover:bg-red-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 mx-1"
                     onClick={closeModal}
                   >
                     Cancel
@@ -78,7 +78,7 @@ export default function LogoutModel({ isOpen, setIsOpen }) {
 
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="w-full inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 mx-1"
                     onClick={logout}
                   >
                     Logout

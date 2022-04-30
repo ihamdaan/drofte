@@ -73,7 +73,7 @@ function HomeFeedPost({ question }) {
         <>
             <div className='my-2 px-2 pt-4 flex gap-8  cursor-pointer hover:bg-gray-100 transition-all duration-200 rounded' onClick={() => handleClick(question?._id)}>
                 <div className='w-16 h-14 '>
-                    <img src={question?.user?.profilePhoto?.url || test__img} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
+                    <img src={question?.user?.profilePhoto?.url} alt="profile_pic" className="w-full h-full rounded-full object-cover" />
                 </div>
 
                 <div className='w-full  overflow-x-auto'>

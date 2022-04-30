@@ -6,8 +6,11 @@ export const getAllQues = (keyword = "", page = 1) => async (dispatch) => {
     try {
         dispatch({ type: "ALL_QUES_REQUEST" })
         let link = `/api/v1/question/all?page=${page}`
+
         if (keyword !== "") {
-            link = `/api/v1/question/all?keyword=${keyword}`
+
+            var newURL = encodeURIComponent(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+            link = `/api/v1/question/all?keyword=+${newURL}`
         }
         const { data } = await axios.get(link, {
             headers: {
@@ -150,6 +153,24 @@ export const getQuestionDetails = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "SINGLE_QUES_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+//Get all Tags
+export const getAllTags = () => async (dispatch) => {
+    try {
+        dispatch({ type: "TAGS_REQUEST" })
+
+        const { data } = await axios.get(`/api/v1/question/tags`);
+        dispatch({
+            type: "TAGS_SUCCESS",
+            payload: data.tags
+        })
+    } catch (error) {
+        dispatch({
+            type: "TAGS_FAIL",
             payload: error.response.data.error
         })
     }

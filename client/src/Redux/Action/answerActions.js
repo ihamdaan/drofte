@@ -51,3 +51,35 @@ export const deleteAnswer = (answerId) => async (dispatch) => {
         })
     }
 }
+
+export const LikeAnswer = (answerId) => async (dispatch) => {
+    try {
+        dispatch({ type: "LIKE_REQUEST" })
+        const { data } = await axios.get(`/api/v1/answer/like/${answerId}`)
+        dispatch({
+            type: "LIKE_SUCCESS",
+            payload: { message: data.message, isLiked: data.isLiked }
+        })
+    } catch (error) {
+        dispatch({
+            type: "LIKE_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}
+
+export const DislikeAnswer = (answerId) => async (dispatch) => {
+    try {
+        dispatch({ type: "DISLIKE_REQUEST" })
+        const { data } = await axios.get(`/api/v1/answer/dislike/${answerId}`)
+        dispatch({
+            type: "DISLIKE_SUCCESS",
+            payload: { message: data.message, isDisliked: data.isDisliked }
+        })
+    } catch (error) {
+        dispatch({
+            type: "DISLIKE_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}

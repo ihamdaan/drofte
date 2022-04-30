@@ -20,7 +20,7 @@ function ProfilePageFeed() {
         loading ? <Loader />
           :
           <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-            <div className='sticky text-2xl font-medium'>My Profile</div>
+            <h1 className='sticky text-2xl font-medium'>My Profile</h1>
 
             <div className='profile_header relative h-80 mt-2'>
               <div className='object-cover h-60 w-full'>
@@ -51,6 +51,7 @@ function ProfilePageFeed() {
             <div className='mt-8'>
               <div className='font-bold text-xl'>{user.name}</div>
               <div className='text-sm text-gray-400'>{user.email}</div>
+              <div className='text-sm text-gray-400 my-2'>A student of <strong> {user?.branch}</strong></div>
 
               <div className='mt-4 text-md text-gray-800'>
                 {

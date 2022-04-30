@@ -5,10 +5,13 @@ import HomeSidebar from '../components/Navbar/homePageSidebar.component'
 
 function SignIn() {
   return (
-    <div className="SignIn flex">
-      <HomeSidebar />
-      <SignInPageBody />
-    </div>
+    <>
+      <div className="SignIn flex">
+        {/*Large Screen*/}
+        <HomeSidebar />
+        <SignInPageBody />
+      </div>
+    </>
   );
 }
 

@@ -17,12 +17,12 @@ class ApiFeatures {
                                 $regex: search[i], $options: 'i'
                             }
                         },
-                        {
-                            desc:
-                            {
-                                $regex: search[i], $options: 'i'
-                            }
-                        },
+                        // {
+                        //     desc:
+                        //     {
+                        //         $regex: search[i], $options: 'i'
+                        //     }
+                        // },
                         {
                             tags: {
                                 $in: new RegExp(search[i], 'i'),

@@ -44,7 +44,11 @@ const NavSm = () => {
 
 //Tab Screen
 const NavMd = () => {
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isSignOpen, setIsSignOpen] = useState(false);
+  const Navigate = useNavigate()
+  const location = useLocation()
 
   const logoutModal = () => {
     setIsOpen(true);
@@ -63,50 +67,38 @@ const NavMd = () => {
               </div>
 
               <div className='flex flex-col items-center'>
-                <button title='Home' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/" title='Home' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <BiHomeCircle className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Your Queries' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+
+                <Link to="/queries" title='Your Queries' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/queries" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <RiQuestionnaireLine className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Your Remarks' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/remarks" title='Your Remarks' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/remarks" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <AiOutlineSolution className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Notifications' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
-                  <div className="w-8 h-8">
-                    <CgNotifications className="w-full h-full" />
-                  </div>
-                </button>
-
-                <button title='Profile' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/profile" title='Profile' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <CgProfile className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
 
-                <button title='Settings' className="my-4 flex rounded-xl gap-4 hover:drop-shadow-sm
-                    focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full">
+                <Link to="/question/new" title='Ask Question' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <RiSettingsLine className="w-full h-full" />
                   </div>
-                </button>
+                </Link>
               </div>
 
-              <button className="hidden my-5 text-xl w-full bg-bms-400 text-white px-4 py-2 font-semibold rounded-3xl">
-                Discuss
-              </button>
             </div>
 
             <div className="flex gap-3 items-center">
@@ -207,13 +199,13 @@ const NavLg = ({ user }) => {
                 :
                 <div className='flex gap-2 p-3 items-center'>
                   <div className='flex flex-col w-full mx-7'>
-                    <button className="mb-4 py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signin")}>
+                    <button className="mb-4 p-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signin")}>
                       <div className="w-8 h-8">
                         <PermIdentityTwoToneIcon className="w-full h-full" />
                       </div>
                       <div className="text-lg">Login</div>
                     </button>
-                    <button className=" py-1 px-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signup")}>
+                    <button className=" p-2 flex rounded-md gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-blue-400 hover:bg-gray-100 w-full bg-blue-400 text-white font-bold" onClick={() => Navigate("/signup")}>
                       <div className="w-8 h-8">
                         <PersonAddAltTwoToneIcon className="w-full h-full" />
                       </div>
@@ -237,7 +229,7 @@ const HomeSidebar = () => {
   return (
     <>
       <div className="">
-        <div className="md:hidden">
+        <div className="md:hidden sm:flex">
           {/*Small Screen*/}
           <NavSm user={user} />
         </div>

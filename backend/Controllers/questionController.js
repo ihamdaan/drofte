@@ -102,7 +102,7 @@ exports.getLoggedInUserQuestions = catchAsyncErrors(async (req, res, next) => {
         populate: {
             path: "user",
         }
-    }).populate("user", "name email"), req.query).search().pagination();
+    }).populate("user"), req.query).search().pagination();
     let questions = await filteredQues.list;
 
     const filteredQuesCount = questions.length
@@ -131,4 +131,13 @@ exports.getLoggedInUserRemarks = catchAsyncErrors(async (req, res, next) => {
     }
 
     return res.status(200).json({ success: true, answers, ResultsPerPage, filteredQuesCount });
+})
+
+exports.getAllTags = catchAsyncErrors(async (req, res, next) => {
+
+    const tags = await Question.distinct("tags");
+    if (!tags) {
+        return next(new ErrorHandler(404, "No tags found"));
+    }
+    return res.status(200).json({ success: true, tags });
 })
