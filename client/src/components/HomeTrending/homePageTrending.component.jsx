@@ -31,7 +31,7 @@ function HomePageTrending() {
                 onChange={(e) => setValue(e.target.value)}
               />
             </div>
-              : <div className='text-3xl font-medium mb-6'>Trending</div>
+              : <h1 className='mb-6'>Trending</h1>
           }
 
           <div className='bg-gray-100 p-3 rounded-xl w-full mt-6'>

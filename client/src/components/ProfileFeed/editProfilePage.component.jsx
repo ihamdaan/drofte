@@ -1,6 +1,3 @@
-import profile__bg__test__img from "../../images/default_edit_bg_img.jpg";
-import profile__test__img from "../../images/default_edit_profile_img.png";
-
 import { useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
@@ -86,7 +83,7 @@ function ProfilePageFeed() {
       dispatch({ type: "CLEAR_ERRORS" })
     }
 
-  }, [isUpdated, alert, error, dispatch])
+  }, [isUpdated, alert, error, dispatch, Navigate])
 
   useEffect(() => {
     setState({
@@ -124,13 +121,13 @@ function ProfilePageFeed() {
               </div>
 
               <div className='profile_header relative h-80 mt-2'>
-                <div className='object-cover h-60 w-full relative'>
+                <div className=' h-60 w-full relative'>
                   <img
-                    src={coverPreview || profile__bg__test__img}
+                    src={coverPreview}
                     alt="background"
-                    className='w-full h-full border-b'
+                    className='w-full h-full border-b object-cover'
                   />
-                  <div className='absolute bottom-1 right-1 cursor-pointer flex items-center gap-1 hover:bg-white p-2 rounded-xl hover:font-semibold' onClick={() => onButtonClick(coverFile)}>
+                  <div className='absolute bottom-1 right-1 cursor-pointer flex items-center gap-1 hover:bg-white p-2 rounded-xl hover:font-semibold bg-gray-400 transition-all' onClick={() => onButtonClick(coverFile)}>
                     <AddIcon className='cursor-pointer' />
                     Add Image
                   </div>
@@ -154,7 +151,7 @@ function ProfilePageFeed() {
 
                 <div
                   onClick={() => Navigate("/password/change")}
-                  className='py-1 rounded-2xl px-3 absolute bottom-10 right-0 ring-1 ring-red-500 font-medium hover:bg-red-100 cursor-pointer text-red-500'
+                  className='py-2 rounded-2xl px-3 absolute bottom-7 right-0 border border-red-400 font-medium hover:bg-red-500 hover:text-white transition-all cursor-pointer text-red-500'
                 >
                   Change Password
                 </div>

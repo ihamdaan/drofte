@@ -87,7 +87,7 @@ export default function SignInModal({ isSignOpen, setIsSignOpen }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="bg-bms-400 drop-shadow-2xl inline-block w-3/4 mx-10 w-full overflow-hidden text-left align-middle transition-all transform rounded-2xl">
+              <div className="bg-bms-400 drop-shadow-2xl inline-block mx-10 w-full overflow-hidden text-left align-middle transition-all transform rounded-2xl">
                 <div className="">
                   <div className="text-white mx-12 my-2 flex justify-center items-center gap-3">
                     <div className="w-full">

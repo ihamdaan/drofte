@@ -37,8 +37,8 @@ const CreateNewPassPage = () => {
             {loading ? <Loader /> :
                 <div className='bg-gray-50 px-8 py-8 md:px-48 lg:flex lg:gap-14'>
 
-                    <div className='lg:hidden md:px-24 w-full lg:flex items-center lg:justify-end'>
-                        <img src={create_pass_img} alt="create__pass__img" className='md:w-80 lg:w-80' />
+                    <div className=' w-2/3 lg:flex items-center lg:justify-end'>
+                        <img src={create_pass_img} alt="create__pass__img" className='sm:m-auto md:w-80 lg:w-full lg:h-full' />
                     </div>
 
                     <div className='lg:w-full'>
@@ -65,10 +65,6 @@ const CreateNewPassPage = () => {
                                 <button className="text-white mb-8 bg-bms-400 px-3 font-semibold py-2 text-xl rounded-lg focus:bg-bms-100 focus:text-gray-500 hover:bg-bms-500 " type='submit'>Reset Password</button>
                             </form>
                         </div>
-                    </div>
-
-                    <div className=' hidden md:px-24 w-full lg:flex items-center lg:justify-end'>
-                        <img src={create_new_pass_img} alt="create__new__pass__img" className='md:w-80 lg:w-80' />
                     </div>
                 </div>}
         </>

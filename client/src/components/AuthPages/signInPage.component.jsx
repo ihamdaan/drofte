@@ -81,7 +81,7 @@ const NavLg = ({ handleSubmit, state, handleChange, navigate }) => {
           <div className="w-full">
             <form onSubmit={handleSubmit} method="post">
               <div className="mb-12 mt-8">
-                <div className="text-5xl font-semibold">Sign In!</div>
+                <h1 className="text-5xl font-semibold">Sign In!</h1>
               </div>
               <div className="my-8">
                 <div className="mb-6">
@@ -95,8 +95,8 @@ const NavLg = ({ handleSubmit, state, handleChange, navigate }) => {
                 <button className="text-bms-400 bg-gray-200 px-3 py-2 text-lg hover:bg-white rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit">Sign In</button>
               </div>
               <div className="my-6">
-                <span><div className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</div></span>
-                <span><div className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></div></span>
+                <span><h3 className="text-white hover:text-red-600 cursor-pointer" onClick={() => navigate("/password/forget")}>Forgot Password?</h3></span>
+                <span><h3 className="text-white">Don't have an account? <span className="cursor-pointer hover:font-semibold underline underline-offset-4" onClick={() => navigate("/signup")} >Sign Up</span></h3></span>
               </div>
             </form>
           </div>
@@ -153,13 +153,13 @@ const SignInPageBody = () => {
     <>
       {
         loading ? <Loader /> :
-          <div className="p-4">
+          <div className="bg-gray-50 p-4">
             <div className="md:hidden ">
               {/*Small Screen*/}
               <NavSm handleSubmit={handleSubmit} state={state} handleChange={handleChange} navigate={Navigate} />
             </div>
 
-            <div className="hidden bg-gray-50 md:flex lg:hidden">
+            <div className="hidden md:flex lg:hidden">
               {/*Medium Screen*/}
               <NavMd handleSubmit={handleSubmit} state={state} handleChange={handleChange} navigate={Navigate} />
             </div>

@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 
 import { MdCancel } from 'react-icons/md';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuestionDetails } from '../../Redux/Action/questionActions';
 import ReactQuill from 'react-quill';
@@ -16,7 +16,7 @@ import AnswerCard from './answerCard';
 const ViewQuestionPage = () => {
 
     const { id } = useParams();
-    const { currentQuestion: q } = useSelector(state => state.questions);
+    const { currentQuestion: q, error: quesError } = useSelector(state => state.questions);
     const { isAdded, isDeleted, isUpdated, error, message } = useSelector(state => state.answers);
     const dispatch = useDispatch()
     const ref = createRef(null)
@@ -44,6 +44,10 @@ const ViewQuestionPage = () => {
             alert.error(error)
             dispatch({ type: "CLEAR_ERRORS" })
         }
+        if (quesError) {
+            Navigate(-1)
+            dispatch({ type: "CLEAR_ERRORS" })
+        }
         if (isAdded) {
             alert.success("Answer added successfully")
             dispatch({ type: "NEW_ANSWER_RESET" })
@@ -62,18 +66,18 @@ const ViewQuestionPage = () => {
             dispatch({ type: "RESET_MESSAGE" })
         }
         dispatch(getQuestionDetails(id))
-    }, [isAdded, isDeleted, isUpdated, alert, error, dispatch, message, id])
+    }, [isAdded, isDeleted, isUpdated, alert, error, dispatch, message, id, quesError, Navigate])
 
 
     return (
         <>
 
             <div className='right__border__line w-full top-0 bottom-0 overflow-auto bg-gray-50' >
-                <div className='flex gap-3 items-center sticky bottom__border__line' >
+                <div className='flex gap-3 items-center sticky' >
                     <div className="w-8 h-8  cursor-pointer" onClick={() => Navigate(-1)}>
                         <IoIosArrowBack className="w-full h-full" />
                     </div>
-                    <div className='text-2xl sticky pt-4 px-4 pb-3'>{q?.title}</div>
+                    <h1 className='sticky pt-4 px-4 pb-3 bottom__border__line'>{q?.title}</h1>
                 </div>
 
                 <div className='py-4 px-4 flex gap-8 bottom__border__line  cursor-default'>
@@ -84,9 +88,9 @@ const ViewQuestionPage = () => {
                     <div className='w-full overflow-x-auto'>
                         <div className='flex items-center gap-2 relative'>
                             <div>
-                                <div className='text-lg font-bold text-gray-700'>
+                                <Link to={`/profile/${q?.user._id}`} className='text-lg font-bold text-gray-700 hover:underline'>
                                     {q?.user?.name}
-                                </div>
+                                </Link>
 
                                 <div className='font-medium text-gray-500 text-sm'>
                                     &lt; {q?.user?.email} &gt;
@@ -114,7 +118,7 @@ const ViewQuestionPage = () => {
 
                 <div className='flex justify-between items-center p-6'>
                     <div className=' text-xl font-semibold text-gray-600'>Remarks</div>
-                    <button className='text-xl font-semibold bg-green-500 px-3 py-1 rounded text-white hover:bg-green-600 shadow drop-shadow-md rounded-lg' onClick={handleClick}>Add Remark</button>
+                    <button className='text-xl font-semibold bg-green-500 px-3 py-1 rounded text-white hover:bg-green-600 shadow drop-shadow-lg' onClick={handleClick}>Add Answer</button>
                 </div>
 
                 {
@@ -128,22 +132,22 @@ const ViewQuestionPage = () => {
                             <div className='w-16 h-16 cursor-pointer'>
                                 <MdCancel className='w-full h-full' />
                             </div>
-                            <h2> No remarks yet.</h2>
+                            <h2> No answers yet.</h2>
                         </div>
                 }
-                <div className='px-6 my-4 text-2xl font-medium'>Add your remark here!</div>
-                <div ref={ref} className="px-3 mb-5">
+                <h1 className='px-6 my-4 '>Add an Answer</h1>
+                <div ref={ref} className="px-3">
                     <ReactQuill
                         theme='snow'
                         value={value}
                         onChange={setValue}
-                        placeholder="Add a new remark..."
+                        placeholder="Add a new answer..."
                         className='mb-6'
                     />
-                    <button type='button' className='font-semibold text-lg bg-green-500 px-3 rounded-lg py-1 rounded text-white hover:bg-green-600 shadow drop-shadow-md' onClick={postAnswer}>Post</button>
+                    <button type='button' className='font-semibold bg-green-500 px-3 py-1 rounded text-white hover:bg-green-600 shadow drop-shadow-lg' onClick={postAnswer}>Post</button>
                 </div>
+                <div className=' bottom__border__line my-3'></div>
             </div>
-
 
         </>
     )

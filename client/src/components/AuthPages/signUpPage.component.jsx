@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 //Mobile Screen
-const NavSm = ({ state, handleChange, handleSubmit }) => {
-    const navigate = useNavigate()
+const NavSm = ({ state, handleChange, handleSubmit, navigate }) => {
     return (
         <>
             <div className="text-black mx-1">
@@ -54,8 +53,7 @@ const NavSm = ({ state, handleChange, handleSubmit }) => {
 };
 
 //Tab Screen
-const NavMd = ({ state, handleChange, handleSubmit }) => {
-    const navigate = useNavigate()
+const NavMd = ({ state, handleChange, handleSubmit, navigate }) => {
     return (
         <>
             <div className="text-black mx-4 my-2 flex justify-center items-center gap-9">
@@ -105,8 +103,7 @@ const NavMd = ({ state, handleChange, handleSubmit }) => {
 };
 
 //Laptop Screen
-const NavLg = ({ state, handleChange, handleSubmit }) => {
-    const navigate = useNavigate()
+const NavLg = ({ state, handleChange, handleSubmit, navigate }) => {
     return (
         <>
             <div className="bg-bms-400 my-6 rounded-lg drop-shadow-2xl">
@@ -132,7 +129,7 @@ const NavLg = ({ state, handleChange, handleSubmit }) => {
                                 <div className="mb-6">
                                     <label htmlFor="password" className="text-xl">Password</label> <br />
                                     <input type="password" name="password" placeholder="password" className=" w-full text-xl mt-2 py-2 px-3 rounded focus:outline-bms-100 text-black" title="create a strong password" required onChange={handleChange} value={state.password} />
-                                    
+
                                 </div>
                                 <div className="flex gap-4 justify-end">
                                     <button className="text-bms-600 bg-gray-50 px-3 py-1 text-lg hover:bg-white hover:text-bms-600 rounded-lg focus:bg-bms-100 focus:text-gray-500" type="submit" >Register</button>
@@ -202,17 +199,17 @@ const SignUpPageBody = () => {
                 <div className="px-6 md:px-10">
                     <div className="md:hidden lg:hidden">
                         {/*Small Screen*/}
-                        <NavSm state={state} handleChange={handleChange} handleSubmit={handleSubmit} />
+                        <NavSm state={state} handleChange={handleChange} handleSubmit={handleSubmit} navigate={Navigate} />
                     </div>
 
                     <div className="bg-gray-50 sm:hidden lg:hidden md:flex">
                         {/*Medium Screen*/}
-                        <NavMd state={state} handleChange={handleChange} handleSubmit={handleSubmit} />
+                        <NavMd state={state} handleChange={handleChange} handleSubmit={handleSubmit} navigate={Navigate} />
                     </div>
 
-                    <div className="sm:hidden md:hidden lg:flex">
+                    <div className="hidden sm:hidden md:hidden lg:flex">
                         {/*Large Screen*/}
-                        <NavLg state={state} handleChange={handleChange} handleSubmit={handleSubmit} />
+                        <NavLg state={state} handleChange={handleChange} handleSubmit={handleSubmit} navigate={Navigate} />
                     </div>
                 </div>}
         </>

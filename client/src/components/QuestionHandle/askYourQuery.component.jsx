@@ -66,7 +66,7 @@ const AskYourQuery = () => {
             {
                 loading ? <Loader /> :
                     <form className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' onSubmit={postData} >
-                        <div className='bottom__border__line sticky text-2xl font-medium pb-3'>Describe your query here in detail !</div>
+                        <div className='bottom__border__line sticky text-3xl font-medium pb-3'>Describe your query here in detail !</div>
 
                         <div className='mb-5 mt-6 ask_question'>
                             <TextField id="outlined-basic" label="Title" variant="outlined" fullWidth value={body.title} onChange={handleChange} name="title" required />

@@ -6,7 +6,7 @@ import HomeSidebar from '../components/Navbar/homePageSidebar.component'
 function SignIn() {
   return (
     <>
-      <div className="SignIn max-h-screen flex max-w-7xl mx-auto">
+      <div className="SignIn flex">
         {/*Large Screen*/}
         <HomeSidebar />
         <SignInPageBody />

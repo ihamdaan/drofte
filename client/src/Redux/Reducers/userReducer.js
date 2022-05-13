@@ -107,6 +107,17 @@ export const profileReducer = createReducer({}, {
         state.loading = false
         state.error = action.payload
     },
+    GET_USER_DETAILS_REQUEST: (state) => {
+        state.loading = true
+    },
+    GET_USER_DETAILS_SUCCESS: (state, action) => {
+        state.loading = false
+        state.user = action.payload
+    },
+    GET_USER_DETAILS_FAIL: (state, action) => {
+        state.loading = false
+        state.error = action.payload
+    },
     CLEAR_ERRORS: (state) => {
         state.error = null
     }

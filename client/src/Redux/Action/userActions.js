@@ -173,3 +173,21 @@ export const changePass = (userData) => async (dispatch) => {
         })
     }
 }
+
+
+//Logout User
+export const getUserDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: "GET_USER_DETAILS_REQUEST" })
+        const { data } = await axios.get(`/api/v1/user/${id}`)
+        dispatch({
+            type: "GET_USER_DETAILS_SUCCESS",
+            payload: data.user
+        })
+    } catch (error) {
+        dispatch({
+            type: "GET_USER_DETAILS_FAIL",
+            payload: error.response.data.error
+        })
+    }
+}

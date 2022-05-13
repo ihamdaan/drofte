@@ -9,20 +9,24 @@ const cloudinary = require("cloudinary")
 exports.RegisterUser = catchAsyncErrors(async (req, res, next) => {
 
     const { name, email, UID, password } = req.body;
-    if (email.slice(0, 9) != UID) {
+    if (email.slice(0, 9).toLowerCase() != UID.toLowerCase()) {
         return next(new ErrorHandler(400, "Invalid Email or UID"));
     }
-    if (await User.findOne({ email })) {
+    if (await User.findOne({ email: email.toLowerCase() })) {
         return next(new ErrorHandler(400, "Email already exists"));
     }
     const user = await User.create({
         name,
-        email,
-        UID,
+        email: email.toLowerCase(),
+        UID: UID.toLowerCase(),
         password,
         profilePhoto: {
             public_id: "empty",
             url: "https://res.cloudinary.com/rajat0512/image/upload/v1642447946/E-commerce/avatar_gehm7u.jpg"
+        },
+        coverPhoto: {
+            public_id: "empty",
+            url: "https://res.cloudinary.com/rajat0512/image/upload/v1652216310/Drofte/drofte_logo_blue_bdv7tm.svg"
         }
     })
     saveToCookie(res, 201, user);
@@ -35,7 +39,7 @@ exports.LoginUser = catchAsyncErrors(async (req, res, next) => {
     if (!email || !password) {
         return next(new ErrorHandler(400, "Please enter all required fields"));
     }
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
     if (!user) {
         return next(new ErrorHandler(400, "Incorrect Username or Password"));
     }
@@ -62,7 +66,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     if (!email) {
         return next(new ErrorHandler(400, "Please enter your email"));
     }
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
         return next(new ErrorHandler(400, "User not found"));
     }
@@ -70,11 +74,12 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
     try {
         //Url for development
-        const url = `http://localhost:3000/api/v1/resetPassword/${token}`;
+        // const url = `http://localhost:3000/api/v1/resetPassword/${token}`;
 
-        // const url = `${req.protocol}://${req.get("host")}/api/v1/resetPassword/${token}`;
+        const url = `${req.protocol}://${req.get("host")}/api/v1/resetPassword/${token}`;
         const subject = "DROFTE - Reset Password";
-        const text = `Hello User👤,\n\n
+        const text = `<h2>Hello User👤,</h2>
+        <br>
         It seems like you are facing problem logging in.\n
         No need to worry, you can reset your Drofte password by clicking the link below.
         \n\n ${url}\n\n
@@ -85,7 +90,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         <p>It seems like you are facing problem logging in. </p>
         <p>No need to worry, you can reset your Drofte password by clicking the link below.</p>
         <br>
-        <b>Click Here⬇️</b>
+        <h2>Click Here⬇️</h2>
         <p>${url}</p>
         <br>
         <p>If you didn't request a password reset, feel free to delete this email and carry on your discussion with acquaintance!<p>
@@ -199,3 +204,8 @@ const addImage = async (req, newData) => {
     }
     return newData
 }
+
+exports.getParticularUserDetails = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id).select("-password");
+    res.status(200).json({ success: true, user });
+})

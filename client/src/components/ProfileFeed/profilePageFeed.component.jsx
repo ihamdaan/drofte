@@ -20,14 +20,14 @@ function ProfilePageFeed() {
         loading ? <Loader />
           :
           <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-            <div className='sticky text-2xl font-medium'>My Profile</div>
+            <h1 className='sticky text-2xl font-medium'>My Profile</h1>
 
             <div className='profile_header relative h-80 mt-2'>
-              <div className='object-cover h-60 w-full'>
+              <div className=' h-60 w-full'>
                 <img
-                  src={profile__bg__test__img}
+                  src={user?.coverPhoto?.url || profile__bg__test__img}
                   alt="background "
-                  className='w-full h-full border-b'
+                  className='w-full h-full border-b object-cover'
                 />
               </div>
               <div className='absolute bottom-0 left-10 w-40 h-40 '>
@@ -49,9 +49,9 @@ function ProfilePageFeed() {
             </div>
 
             <div className='mt-8'>
-              <div className='font-bold text-xl'>{user.name}</div>
-              <div className='text-sm text-gray-400'>{user.email}</div>
-              <div className='text-sm text-gray-400 my-2'>A student of <strong> {user?.branch}</strong></div>
+              <div className='font-bold text-xl my-3'>{user.name}</div>
+              <div className='text-sm text-gray-400 my-3'>{user.email}</div>
+              <div className='text-sm text-gray-400 my-3'>A student of <strong> {user?.branch}</strong></div>
 
               <div className='mt-4 text-md text-gray-800'>
                 {
@@ -77,20 +77,20 @@ function ProfilePageFeed() {
               <div className='social_handles flex justify-between mt-4 text-gray-500 w-3/4 items-center'>
                 {user.links?.LinkedIn &&
                   <div className='flex gap-1 cursor-pointer items-center'>
-                    <FaLinkedin className='w-5 h-5' />
+                    <FaLinkedin className='w-5 h-5 text-blue-900' />
                     <a href={user.links.LinkedIn} target="_blank" rel="noreferrer noopener" className='hover:underline'>LinkedIn</a>
                   </div>}
 
                 {user.links?.Twitter &&
                   <div className='flex gap-1 cursor-pointer items-center'>
-                    <FaTwitter className='w-5 h-5' />
-                    <a href={user.links.Twitter} className='hover:underline'>Twitter</a>
+                    <FaTwitter className='w-5 h-5 text-blue-400' />
+                    <a href={user.links.Twitter} target="_blank" rel="noreferrer noopener" className='hover:underline'>Twitter</a>
                   </div>}
 
                 {user.links?.Instagram &&
                   <div className='flex gap-1 cursor-pointer items-center'>
-                    <FaInstagram className='w-5 h-5' />
-                    <a href={user.links.Instagram} className='hover:underline'>Instagram</a>
+                    <FaInstagram className='w-5 h-5 text-pink-500' />
+                    <a href={user.links.Instagram} target="_blank" rel="noreferrer noopener" className='hover:underline'>Instagram</a>
                   </div>}
 
               </div>

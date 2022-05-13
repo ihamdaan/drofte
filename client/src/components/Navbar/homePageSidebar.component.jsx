@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import '../../../src/index.css';
 import LogoutModal from "../LogoutModal/logoutModal.component";
-import SignInModal from '../SignInModal/signinModal.component';
 
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoExitOutline } from 'react-icons/io5';
 import { BiHomeCircle, BiPlusCircle } from 'react-icons/bi';
 import { AiOutlineSolution } from 'react-icons/ai';
 import { RiQuestionnaireLine, RiSettingsLine } from 'react-icons/ri';
-import { CgNotifications, CgProfile } from 'react-icons/cg';
+import { CgProfile } from 'react-icons/cg';
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import PermIdentityTwoToneIcon from '@mui/icons-material/PermIdentityTwoTone';
 
@@ -43,22 +42,18 @@ const NavSm = () => {
 };
 
 //Tab Screen
-const NavMd = () => {
+const NavMd = ({ user }) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isSignOpen, setIsSignOpen] = useState(false);
-  //const Navigate = useNavigate()
   const location = useLocation()
 
   const logoutModal = () => {
     setIsOpen(true);
   };
-  
-  //const Navigate = useNavigate()
 
   return (
     <>
-      <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />
+      {user && <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />}
 
       <div className="">
         <div className="right__border__line top-0 bottom-0 lg:left-0 p-2 w-5/6 overflow-y-auto text-center h-full">
@@ -88,15 +83,15 @@ const NavMd = () => {
                   </div>
                 </Link>
 
-                <Link to="/profile" title='Profile' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500" : ""} `}>
-                  <div className="w-8 h-8">
-                    <CgProfile className="w-full h-full" />
-                  </div>
-                </Link>
-
                 <Link to="/question/new" title='Ask Question' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500" : ""} `}>
                   <div className="w-8 h-8">
                     <RiSettingsLine className="w-full h-full" />
+                  </div>
+                </Link>
+
+                <Link to="/profile" title='Profile' className={`my-4 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500" : ""} `}>
+                  <div className="w-8 h-8">
+                    <CgProfile className="w-full h-full" />
                   </div>
                 </Link>
               </div>
@@ -120,7 +115,6 @@ const NavMd = () => {
 const NavLg = ({ user }) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isSignOpen, setIsSignOpen] = useState(false);
   const Navigate = useNavigate()
   const location = useLocation()
 
@@ -128,23 +122,16 @@ const NavLg = ({ user }) => {
     setIsOpen(true);
   };
 
-  const signinModal = () => {
-    setIsSignOpen(true);
-  };
-
   return (
     <>
-      <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
-      <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />
-      {user ? "" :
-        <SignInModal setIsSignOpen={setIsSignOpen} isSignOpen={isSignOpen} />
-      }
+      {user && <LogoutModal setIsOpen={setIsOpen} isOpen={isOpen} />}
+
       <div className="">
         <div className="right__border__line top-0 min-h-screen bottom-0 lg:left-0 p-2 w-[250px] overflow-y-auto text-center h-full">
           <div className="flex flex-col justify-evenly h-full">
             <div className="px-5 py-1">
-              <div className="mb-8 top-0 cursor-pointer" onClick={() => Navigate("/")}>
-                <img src={drofte__logo} alt="drofte_logo" className="w-80"/>
+              <div className="mb-5">
+                <img src={drofte__logo} alt="drofte_logo" className="w-80" />
               </div>
 
               <Link to={"/"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
@@ -154,28 +141,28 @@ const NavLg = ({ user }) => {
                 <div className="text-xl">Home</div>
               </Link>
 
-              <Link to={"/queries"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/queries" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+              <Link to={"/queries"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/queries" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <RiQuestionnaireLine className="w-full h-full" />
                 </div>
                 <div className="text-xl">Your Queries</div>
               </Link>
 
-              <Link to={"/remarks"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/remarks" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+              <Link to={"/remarks"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/remarks" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <AiOutlineSolution className="w-full h-full" />
                 </div>
                 <div className="text-xl">Your Remarks</div>
               </Link>
 
-              <Link to={"/question/new"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+              <Link to={"/question/new"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/question/new" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <BiPlusCircle className="w-full h-full" />
                 </div>
                 <div className="text-xl">Ask Question</div>
               </Link>
 
-              <Link to={"/profile"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500 bg-gray-100 font-bold " : ""} `} >
+              <Link to={"/profile"} className={`my-2 p-2 flex rounded-xl gap-4 hover:drop-shadow-sm focus:font-bold items-center cursor-pointer hover:text-bms-500 hover:bg-gray-50 w-full ${location.pathname === "/profile" ? "text-bms-500 bg-gray-200 font-bold " : ""} `} >
                 <div className="w-8 h-8">
                   <CgProfile className="w-full h-full" />
                 </div>
@@ -186,24 +173,21 @@ const NavLg = ({ user }) => {
             {
               user ?
                 <>
-                  <div>
-                    <Link to={"/profile"} className="flex gap-2 p-3 justify-center cursor-pointer">
-                      <div className="">
-                        <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="rounded-full object-cover h-11 w-11" />
-                      </div>
+                  <div className="flex gap-2 p-3 items-center justify-evenly">
+                    <div className="">
+                      <img src={user?.profilePhoto?.url || test__img} alt="profile_pic" className="rounded-full object-cover h-11 w-11" />
+                    </div>
 
-                      <div className="text-xl leading-5">
-                        {user.name} <br />
-                        <span className="text-sm text-gray-400">@{user.UID}</span>
-                      </div>
-                    </Link>
-
-                    <Link className="px-5">
-                      <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full mb-5">
-                        <button type='button'>Logout </button>
-                        <IoExitOutline className="w-6 h-9 " />
-                      </div>
-                    </Link>
+                    <div className="text-xl leading-5">
+                      {user.name} <br />
+                      <span className="text-sm text-gray-400">@{user.UID}</span>
+                    </div>
+                  </div>
+                  <div className="px-5">
+                    <div onClick={logoutModal} className="flex text-red-700 hover:text-white hover:bg-red-600 cursor-pointer bg-red-100 justify-center rounded-md gap-2 pr-2 w-full mb-5">
+                      <button type='button'>Logout </button>
+                      <IoExitOutline className="w-6 h-9 " />
+                    </div>
                   </div>
                 </>
                 :

@@ -37,7 +37,7 @@ const UserRemarks = () => {
     return (
         <>
             <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-                <div className='bottom__border__line text-2xl sticky font-medium pb-3'>Your Remarks</div>
+                <h1 className='bottom__border__line sticky font-medium pb-3'>Your Remarks</h1>
                 {
                     myAns?.length ?
                         myAns.map(ans => (
@@ -45,7 +45,7 @@ const UserRemarks = () => {
                                 <div className='py-4 pl-14 px-4 flex gap-8' >
                                     <AnswerCard answer={ans} />
                                 </div>
-                                <Link to={`/question/${ans.questionId}`} className=" text-right text-gray-700 p-2 flex items-center gap-3 justify-end">
+                                <Link to={`/question/${ans.questionId}`} className=" text-right p-2 flex items-center gap-3 justify-end">
                                     Navigate to question
                                     <BsFillArrowRightSquareFill className='w-5 h-5' />
                                 </Link>

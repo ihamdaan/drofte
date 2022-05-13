@@ -6,7 +6,7 @@ import Metadata from '../components/Metadata';
 
 function HomePage() {
   return (
-    <div className="HomePage max-h-screen flex max-w-7xl mx-auto">
+    <div className="HomePage max-h-screen flex mx-auto">
       <Metadata title={"Home Page | DROFTE"} />
       <HomeSidebar />
       <HomePageFeed />

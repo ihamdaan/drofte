@@ -9,6 +9,7 @@ import { useAlert } from 'react-alert';
 import { deleteAnswer, DislikeAnswer, LikeAnswer, updateAnswer } from '../../Redux/Action/answerActions';
 import ConfirmModal from '../confirmModal/ConfirmModal.component';
 import { Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const AnswerCard = ({ answer }) => {
 
@@ -56,9 +57,9 @@ const AnswerCard = ({ answer }) => {
 
                 <div className='w-full'>
                     <div className='flex items-center gap-2 relative'>
-                        <div className='font-medium text-gray-700 text-lg'>
+                        <Link to={`/profile/${answer?.user?._id}`} className='font-bold text-gray-700 text-lg hover:underline'>
                             {answer?.user?.name}
-                        </div>
+                        </Link>
 
                         <div className='font-medium text-gray-500 text-sm'>
                             &lt; {answer?.user?.email} &gt;

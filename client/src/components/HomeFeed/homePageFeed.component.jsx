@@ -92,7 +92,7 @@ function HomePageFeed() {
       {
         loading ? <Loader /> :
           <div className='right__border__line py-4 px-4 top-0 bottom-0 overflow-y-auto w-full' >
-            <div className='text-2xl font-medium sticky'>Home Feed</div>
+            <h1 className='sticky'>Home Feed</h1>
 
             <div className='my-2 py-2 flex gap-8 bottom__border__line justify-center items-center'>
               <div className='w-14 h-12 ml-3'>

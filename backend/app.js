@@ -3,6 +3,7 @@ const CookieParser = require("cookie-parser")
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
 const app = express()
+const path = require("path")
 
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config({ path: "backend/Config/config.env" });
@@ -24,5 +25,12 @@ app.use("/api/v1/answer", answer);
 
 //For error handling
 app.use(error)
+
+//For production
+app.use(express.static(path.join(__dirname, "../client/build")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+})
 
 module.exports = app;
